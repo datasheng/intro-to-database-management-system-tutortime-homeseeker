@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:8.0
+    init: true
+    restart: always
+    ports:
+      - 3306:3306
+    networks:
+      - private
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: bookings_db
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  web:
+    build:
+      context: .
+      target: dev
+    init: true
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 3000:3000
+    networks:
+      - public
+      - private
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+
+networks:
+  public:
+  private:
+
+volumes:
+  db-data:
