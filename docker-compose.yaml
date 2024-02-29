@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   db:
     image: mysql:8.0
@@ -7,15 +5,15 @@ services:
     restart: always
     ports:
       - 3306:3306
-    networks:
-      - private
     volumes:
-      - db-data:/var/lib/mysql
+      - ./db-procs:/docker-entrypoint-initdb.d
     environment:
       MYSQL_DATABASE: bookings_db
+      MYSQL_USER: bookings_web
+      MYSQL_PASSWORD: bookings_web
       MYSQL_ROOT_PASSWORD: root
     healthcheck:
-      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
       interval: 5s
       timeout: 5s
       retries: 20
@@ -31,17 +29,11 @@ services:
         condition: service_healthy
     ports:
       - 3000:3000
-    networks:
-      - public
-      - private
     volumes:
       - .:/app
       - /app/node_modules
       - /app/.next
-
-networks:
-  public:
-  private:
-
-volumes:
-  db-data:
+    environment:
+      DB_NAME: bookings_db
+      DB_USER: bookings_web
+      DB_PASSWORD: bookings_web
