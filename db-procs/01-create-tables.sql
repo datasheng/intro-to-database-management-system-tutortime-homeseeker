@@ -5,7 +5,7 @@ CREATE TABLE user (
     first_name    VARCHAR(35)  NOT NULL,
     last_name     VARCHAR(35)  NOT NULL,
     email         VARCHAR(255) NOT NULL,
-    password_hash CHAR(43)     NOT NULL,
+    password_hash CHAR(97)     NOT NULL,
 
     PRIMARY KEY (id),
     UNIQUE (email)
