@@ -8,10 +8,10 @@ services:
     volumes:
       - ./db-procs:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_DATABASE: bookings_db
-      MYSQL_USER: bookings_web
-      MYSQL_PASSWORD: bookings_web
+      MYSQL_DATABASE: ${DB_NAME}
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
       interval: 5s
@@ -33,7 +33,3 @@ services:
       - .:/app
       - /app/node_modules
       - /app/.next
-    environment:
-      DB_NAME: bookings_db
-      DB_USER: bookings_web
-      DB_PASSWORD: bookings_web
