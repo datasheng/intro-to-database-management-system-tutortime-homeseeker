@@ -36,12 +36,14 @@ CREATE TABLE schedule (
 );
 
 CREATE TABLE appointment (
+    id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id    INT UNSIGNED NOT NULL,
     service_id INT UNSIGNED NOT NULL,
     start      DATETIME     NOT NULL,
     end        DATETIME     NOT NULL,
     notes      TEXT         NULL,
 
+    PRIMARY KEY (id),
     FOREIGN KEY (user_id)    REFERENCES user(id),
     FOREIGN KEY (service_id) REFERENCES service(id)
 );
