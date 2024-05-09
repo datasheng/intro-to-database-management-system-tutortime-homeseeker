@@ -1,6 +1,6 @@
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
 
-import { pool } from "@/db/index";
+import { pool } from "@/db";
 
 export interface Service extends RowDataPacket {
 	id: number;
@@ -23,8 +23,8 @@ export async function getServices(): Promise<Service[]> {
             s.timezone AS timezone,
             s.duration AS duration,
             s.description AS description
-        FROM bookings_db.service AS s
-        JOIN bookings_db.user AS u
+        FROM tt_service AS s
+        JOIN user AS u
             ON s.admin_id = u.id
         WHERE s.active = true`,
 	);
@@ -45,7 +45,7 @@ export async function createService(
 	description?: string,
 ): Promise<number> {
 	const [res] = await pool.execute<ResultSetHeader>(
-		`INSERT INTO bookings_db.service (name, admin_id, timezone, duration, description)
+		`INSERT INTO tt_service (name, admin_id, timezone, duration, description)
         VALUES (:name, :admin_id, :timezone, :duration, :description)`,
 		{ name, admin_id, timezone, duration, description },
 	);
@@ -57,5 +57,5 @@ export async function createService(
  * Deletes service with given id.
  */
 export async function deleteService(id: number): Promise<void> {
-	await pool.execute("DELETE FROM bookings_db.service WHERE id = :id", { id });
+	await pool.execute("DELETE FROM service WHERE id = :id", { id });
 }

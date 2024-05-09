@@ -19,7 +19,7 @@ export interface Property extends RowDataPacket {
  */
 export async function getProperties(): Promise<Property[]> {
 	const [res] = await pool.execute<Property[]>(
-		"SELECT id, broker_id, address, zipcode, type, price, rooms, area, built FROM bookings_db.hs_property",
+		"SELECT id, broker_id, address, zipcode, type, price, rooms, area, built FROM hs_property",
 	);
 	return res;
 }
@@ -29,7 +29,7 @@ export async function getProperties(): Promise<Property[]> {
  */
 export async function getPropertiesByUser(user: number): Promise<Property[]> {
 	const [res] = await pool.execute<Property[]>(
-		`SELECT id, broker_id, address, zipcode, type, price, rooms, area, built FROM bookings_db.hs_property
+		`SELECT id, broker_id, address, zipcode, type, price, rooms, area, built FROM hs_property
 		WHERE broker_id = :user`,
 		{ user },
 	);
@@ -43,7 +43,7 @@ export async function getPropertiesByZipcode(
 	zipcode: number,
 ): Promise<Property[]> {
 	const [res] = await pool.execute<Property[]>(
-		`SELECT id, broker_id, address, zipcode, type, price, rooms, area, built FROM bookings_db.hs_property
+		`SELECT id, broker_id, address, zipcode, type, price, rooms, area, built FROM hs_property
         WHERE zipcode = :zipcode`,
 		{ zipcode },
 	);
@@ -55,7 +55,7 @@ export async function getPropertiesByZipcode(
  */
 export async function getPropertyByID(id: number): Promise<Property | null> {
 	const [res] = await pool.execute<Property[]>(
-		`SELECT id, broker_id, address, zipcode, type, price, rooms, area, built FROM bookings_db.hs_property
+		`SELECT id, broker_id, address, zipcode, type, price, rooms, area, built FROM hs_property
         WHERE id = :id`,
 		{ id },
 	);
@@ -72,7 +72,7 @@ export async function getPropertyByAddress(
 	address: string,
 ): Promise<Property | null> {
 	const [res] = await pool.execute<Property[]>(
-		`SELECT id, broker_id, address, zipcode, type, price, rooms, area, built FROM bookings_db.hs_property
+		`SELECT id, broker_id, address, zipcode, type, price, rooms, area, built FROM hs_property
         WHERE address = :address`,
 		{ address },
 	);
@@ -90,8 +90,8 @@ export async function getPropertyBySchedule(
 ): Promise<Property | null> {
 	const [res] = await pool.execute<Property[]>(
 		`SELECT P.broker_id, P.address, P.zipcode, P.type, P.price, P.rooms, P.area, P.built, S.start, S.end
-		FROM bookings_db.hs_property AS P
-		INNER JOIN bookings_db.hs_schedule as S
+		FROM hs_property AS P
+		INNER JOIN hs_schedule as S
         ON S.property_id = P.id
 		WHERE S.id = :schedule_id`,
 		{ schedule_id },
@@ -131,7 +131,7 @@ export async function createProperty(
 		};
 
 		const [res] = await pool.execute<ResultSetHeader>(
-			`INSERT INTO bookings_db.hs_property (broker_id, address, zipcode, type, price, rooms, area, built)
+			`INSERT INTO hs_property (broker_id, address, zipcode, type, price, rooms, area, built)
             VALUES (:broker_id, :address, :zipcode, :type, :price, :rooms, :area, :built)`,
 			params,
 		);
@@ -146,7 +146,7 @@ export async function createProperty(
  * Deletes a property with given id.
  */
 export async function deleteProperty(id: number): Promise<void> {
-	await pool.execute("DELETE FROM bookings_db.hs_property WHERE id = :id", {
+	await pool.execute("DELETE FROM hs_property WHERE id = :id", {
 		id,
 	});
 }
@@ -175,7 +175,7 @@ export async function updateProperty(
 		id,
 	};
 	await pool.execute(
-		`UPDATE bookings_db.hs_property
+		`UPDATE hs_property
         SET address = :address,
             zipcode = :zipcode,
             type = :type,

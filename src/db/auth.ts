@@ -83,7 +83,7 @@ export async function createUser(
 
 	try {
 		const [res] = await pool.execute<ResultSetHeader>(
-			`INSERT INTO bookings_db.user (first_name, last_name, email, password_hash)
+			`INSERT INTO user (first_name, last_name, email, password_hash)
             VALUES (:first_name, :last_name, :email, :hash)`,
 			{ first_name, last_name, email, hash },
 		);
