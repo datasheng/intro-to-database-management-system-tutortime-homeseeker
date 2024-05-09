@@ -1,6 +1,6 @@
 import { createCipheriv, createDecipheriv } from "node:crypto";
-
 import { User } from "@/db/auth";
+import { cookies } from "next/headers";
 
 const ALGO = "aes-256-cbc";
 
@@ -44,4 +44,16 @@ export function decryptCookie(cookie: string): User | null {
 	}
 
 	return payload.user;
+}
+
+export function getCurrentUser(): User | null {
+	const sessionCookie = cookies()?.get("session")?.value;
+	if (!sessionCookie) {
+		return null;
+	}
+	const decryptedUser = decryptCookie(sessionCookie);
+	if (!decryptedUser || typeof decryptedUser.id !== "number") {
+		return null;
+	}
+	return decryptedUser;
 }
