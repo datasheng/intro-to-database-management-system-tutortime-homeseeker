@@ -11,7 +11,7 @@ CREATE TABLE hs_property (
     built       INT UNSIGNED NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (broker_id)    REFERENCES user(id)  
+    FOREIGN KEY (broker_id)    REFERENCES user(id)
 );
 
 CREATE TABLE hs_schedule (

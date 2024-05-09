@@ -18,10 +18,10 @@ export async function getAppointmentsByUser(
 ): Promise<Appointment[]> {
 	const [res] = await pool.execute<Appointment[]>(
 		`SELECT  A.start, A.end, P.address, P.zipcode, P.type, U.first_name, U.last_name
-		FROM bookings_db.hs_appointment AS A
-		INNER JOIN bookings_db.user AS U ON A.user_id = U.id
-		INNER JOIN bookings_db.hs_schedule AS S ON A.schedule_id = S.id
-		INNER JOIN bookings_db.hs_property AS P ON P.id = S.property_id
+		FROM hs_appointment AS A
+		INNER JOIN user AS U ON A.user_id = U.id
+		INNER JOIN hs_schedule AS S ON A.schedule_id = S.id
+		INNER JOIN hs_property AS P ON P.id = S.property_id
 		WHERE A.broker_id = :user_id`,
 		{ user_id },
 	);
@@ -36,10 +36,10 @@ export async function getUpcomingAppointmentsByUser(
 ): Promise<Appointment[]> {
 	const [res] = await pool.execute<Appointment[]>(
 		`SELECT A.start, A.end, P.address, P.zipcode, P.type, U.first_name, U.last_name
-		FROM bookings_db.hs_appointment AS A
-		INNER JOIN bookings_db.user AS U ON U.id = A.user_id
-		INNER JOIN bookings_db.hs_schedule AS S ON A.schedule_id = S.id
-		INNER JOIN bookings_db.hs_property AS P ON P.id = S.property_id
+		FROM hs_appointment AS A
+		INNER JOIN user AS U ON U.id = A.user_id
+		INNER JOIN hs_schedule AS S ON A.schedule_id = S.id
+		INNER JOIN hs_property AS P ON P.id = S.property_id
 		WHERE A.broker_id = :user_id
 		AND A.start > CURRENT_TIMESTAMP`,
 		{ user_id },
@@ -55,10 +55,10 @@ export async function getAppointmentsByBroker(
 ): Promise<Appointment[]> {
 	const [res] = await pool.execute<Appointment[]>(
 		`SELECT  A.start, A.end, P.address, P.zipcode, P.type, U.first_name, U.last_name
-		FROM bookings_db.hs_appointment AS A
-		INNER JOIN bookings_db.user AS U ON A.user_id = U.id
-		INNER JOIN bookings_db.hs_schedule AS S ON A.schedule_id = S.id
-		INNER JOIN bookings_db.hs_property AS P ON P.id = S.property_id
+		FROM hs_appointment AS A
+		INNER JOIN user AS U ON A.user_id = U.id
+		INNER JOIN hs_schedule AS S ON A.schedule_id = S.id
+		INNER JOIN hs_property AS P ON P.id = S.property_id
 		WHERE P.broker_id = :user_id`,
 		{ user_id },
 	);
@@ -73,10 +73,10 @@ export async function getUpcomingAppointmentsByBroker(
 ): Promise<Appointment[]> {
 	const [res] = await pool.execute<Appointment[]>(
 		`SELECT A.start, A.end, P.address, P.zipcode, P.type, U.first_name, U.last_name
-		FROM bookings_db.hs_appointment AS A
-		INNER JOIN bookings_db.user AS U ON U.id = A.user_id
-		INNER JOIN bookings_db.hs_schedule AS S ON A.schedule_id = S.id
-		INNER JOIN bookings_db.hs_property AS P ON P.id = S.property_id
+		FROM hs_appointment AS A
+		INNER JOIN user AS U ON U.id = A.user_id
+		INNER JOIN hs_schedule AS S ON A.schedule_id = S.id
+		INNER JOIN hs_property AS P ON P.id = S.property_id
 		WHERE P.broker_id = :user_id
 		AND A.start > CURRENT_TIMESTAMP`,
 		{ user_id },
@@ -92,8 +92,8 @@ export async function getAppointmentsBySchedule(
 ): Promise<Appointment[]> {
 	const [res] = await pool.execute<Appointment[]>(
 		`SELECT A.start, A.end
-		FROM bookings_db.hs_appointment AS A
-		INNER JOIN bookings_db.hs_schedule AS S ON A.schedule_id = S.id
+		FROM hs_appointment AS A
+		INNER JOIN hs_schedule AS S ON A.schedule_id = S.id
 		WHERE S.id = :schedule_id`,
 		{ schedule_id },
 	);
@@ -108,10 +108,10 @@ export async function getAppointmentsByProperty(
 ): Promise<Appointment[]> {
 	const [res] = await pool.execute<Appointment[]>(
 		`SELECT CONCAT(U.first_name, U.last_name), A.start, A.end, P.address, P.zipcode, P.type
-		FROM bookings_db.hs_appointment AS A
-		INNER JOIN bookings_db.hs_schedule AS S ON A.schedule_id = S.id
-		INNER JOIN bookings_db.user AS U ON U.id = A.user_id
-		INNER JOIN bookings_db.hs_property AS P ON P.id = S.property_id
+		FROM hs_appointment AS A
+		INNER JOIN hs_schedule AS S ON A.schedule_id = S.id
+		INNER JOIN user AS U ON U.id = A.user_id
+		INNER JOIN hs_property AS P ON P.id = S.property_id
 		WHERE P.id = :property_id`,
 		{ property_id },
 	);
@@ -126,10 +126,10 @@ export async function getUpcomingAppointmentsByProperty(
 ): Promise<Appointment[]> {
 	const [res] = await pool.execute<Appointment[]>(
 		`SELECT CONCAT(U.first_name, U.last_name), A.start, A.end, P.address, P.zipcode, P.type
-		FROM bookings_db.hs_appointment AS A
-		INNER JOIN bookings_db.hs_schedule AS S ON A.schedule_id = S.id
-		INNER JOIN bookings_db.user AS U ON U.id = A.user_id
-		INNER JOIN bookings_db.hs_property AS P ON P.id = S.property_id
+		FROM hs_appointment AS A
+		INNER JOIN hs_schedule AS S ON A.schedule_id = S.id
+		INNER JOIN user AS U ON U.id = A.user_id
+		INNER JOIN hs_property AS P ON P.id = S.property_id
 		WHERE P.id = :property_id
 		AND A.start > CURRENT_TIMESTAMP`,
 		{ property_id },
@@ -144,7 +144,7 @@ export async function getAppointmentByID(
 	id: number,
 ): Promise<Appointment | null> {
 	const [res] = await pool.execute<Appointment[]>(
-		"SELECT start, end, user_id FROM bookings_db.hs_appointment WHERE id = :id",
+		"SELECT start, end, user_id FROM hs_appointment WHERE id = :id",
 		{ id },
 	);
 	if (res.length !== 1) {
@@ -165,7 +165,7 @@ export async function createAppointment(
 	end: Date,
 ): Promise<number> {
 	const [res] = await pool.execute<ResultSetHeader>(
-		`INSERT INTO bookings_db.hs_appointment (schedule_id, user_id, start, end)
+		`INSERT INTO hs_appointment (schedule_id, user_id, start, end)
 		  VALUES (:schedule_id, :user_id, :start, :end)`,
 		{ schedule_id, user_id, start, end },
 	);
@@ -181,7 +181,7 @@ export async function updateAppointment(
 	end: Date,
 ): Promise<void> {
 	await pool.execute(
-		`UPDATE bookings_db.hs_appointment
+		`UPDATE hs_appointment
         SET start = :start,
 			end = :end
         WHERE id = :id`,
@@ -193,7 +193,7 @@ export async function updateAppointment(
  * Deletes appointment with given id.
  */
 export async function deleteAppointment(id: number): Promise<void> {
-	await pool.execute("DELETE FROM bookings_db.hs_appointment WHERE id = :id", {
+	await pool.execute("DELETE FROM hs_appointment WHERE id = :id", {
 		id,
 	});
 }

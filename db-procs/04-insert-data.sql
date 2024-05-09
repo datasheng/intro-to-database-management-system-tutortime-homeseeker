@@ -9,20 +9,20 @@ VALUES (3, 'Tyler', 'Ortiz', 'idk@gmail.com', '');
 INSERT INTO user (id, first_name, last_name, email, password_hash)
 VALUES (4, 'James', 'Zou', 'zoujames97@gmail.com', '');
 
-INSERT INTO service (id, name, admin_id, timezone, duration, active, description)
+INSERT INTO tt_service (id, name, admin_id, timezone, duration, active, description)
 VALUES (1, 'CS/Math Tutoring', 1, 'America/New_York', 60, true, 'Get help for any MATH or CSC courses!');
-INSERT INTO service (id, name, admin_id, timezone, duration, active, description)
-VALUES (2, 'Physics Tutoring', 1, 'America/New_York', 45, false, 'Get help for any PHYS courses! (Note: Currently closed for spring break)');
+INSERT INTO tt_service (id, name, admin_id, timezone, duration, active, description)
+VALUES (2, 'Physics Tutoring', 2, 'America/New_York', 45, false, 'Get help for any PHYS courses! (Note: Currently closed for spring break)');
 
-INSERT INTO schedule (service_id, weekday, start, end)
+INSERT INTO tt_schedule (service_id, weekday, start, end)
 VALUES (1, 2, '10:00', '19:00');
-INSERT INTO schedule (service_id, weekday, start, end)
+INSERT INTO tt_schedule (service_id, weekday, start, end)
 VALUES (1, 3, '10:00', '19:00');
-INSERT INTO schedule (service_id, weekday, start, end)
+INSERT INTO tt_schedule (service_id, weekday, start, end)
 VALUES (1, 4, '7:30', '16:00');
 
-INSERT INTO hs_property (id, broker_id, address, zipcode, type, price, rooms, area, built) 
-VALUES 
+INSERT INTO hs_property (id, broker_id, address, zipcode, type, price, rooms, area, built)
+VALUES
     (1, 1, '999 St', '12345', 'House', 250000, 4, 2000, 1995),
     (2, 1, '123 Main St', '54321', 'Apartment', 150000, 2, 1200, 2000),
     (3, 2, '456 Elm St', '67890', 'Condo', 180000, 3, 1500, 1980),
@@ -42,5 +42,3 @@ VALUES
     (5, '2024-05-01 17:00:00', '2024-05-01 21:00:00'),
     (5, '2024-05-02 18:00:00', '2024-05-02 22:00:00'),
     (5, '2024-05-03 19:00:00', '2024-05-03 23:00:00');
-
-
