@@ -1,11 +1,18 @@
 "use client";
 
+import { Button, Card } from "@tremor/react";
+import React, { useEffect, useState } from "react";
+
 import { Schedule } from "@/db/homeseeker/schedule";
-import { Button, Card, TextInput } from "@tremor/react";
-import { useEffect, useState } from "react";
 import { fetchScheduleData, makeAppointment } from "./actions";
 
-const Appointmentform = ({ schedule_id }: { schedule_id: number }) => {
+interface AppointmentFormProps {
+	schedule_id: number;
+}
+
+export const AppointmentForm: React.FC<AppointmentFormProps> = ({
+	schedule_id,
+}) => {
 	const [schedule, setScheule] = useState<Schedule | null>(null);
 	// Get the date input
 	const [input, setInput] = useState({
@@ -104,5 +111,3 @@ const Appointmentform = ({ schedule_id }: { schedule_id: number }) => {
 		</div>
 	);
 };
-
-export default Appointmentform;

@@ -1,18 +1,20 @@
 "use client";
 
-import Editproperty from "@/app/components/editpropertyform/page";
+import { Button, Card } from "@tremor/react";
+import { NextPage } from "next";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
 import { fetchUserDetails } from "@/app/user/actions";
 import { User } from "@/db/auth";
 import { Property } from "@/db/homeseeker/property";
 import { Schedule } from "@/db/homeseeker/schedule";
-import { Button, Card } from "@tremor/react";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import Scheduleform from "../../components/scheduleform/page";
+import { EditPropertyForm } from "./EditPropertyForm";
+import { ScheduleForm } from "./ScheduleForm";
 import { fetchPropertyData, fetchSchedules } from "./actions";
 
-const Viewproperty = () => {
+const ViewProperty: NextPage = () => {
 	const router = useRouter();
 	const property_id = Number(useSearchParams().get("id"));
 	const [user, setUser] = useState<User | null>(null);
@@ -82,13 +84,13 @@ const Viewproperty = () => {
 				) : null}
 			</div>
 			{user && user.id === property?.broker_id && (
-				<Editproperty property_id={property_id} property={property} />
+				<EditPropertyForm property={property} />
 			)}
 			{user && user.id === property?.broker_id && (
-				<Scheduleform property_id={property_id} onSubmit={handleFormSubmit} />
+				<ScheduleForm property_id={property_id} onSubmit={handleFormSubmit} />
 			)}
 		</div>
 	);
 };
 
-export default Viewproperty;
+export default ViewProperty;

@@ -1,14 +1,14 @@
 /*Home Seeker*/
 CREATE TABLE hs_property (
-    id          INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    broker_id   INT UNSIGNED NOT NULL,
-    address     VARCHAR(64)  NOT NULL,
-    zipcode     VARCHAR(16)  NOT NULL,
-    type        VARCHAR(16)  NULL,
-    price       INT UNSIGNED NULL,
-    rooms       INT UNSIGNED NULL,
-    area        INT UNSIGNED NULL,
-    built       INT UNSIGNED NULL,
+    id          INT UNSIGNED         NOT NULL AUTO_INCREMENT,
+    broker_id   INT UNSIGNED         NOT NULL,
+    address     VARCHAR(64)          NOT NULL,
+    zipcode     CHAR(5)              NOT NULL,
+    type        ENUM('rent', 'sale') NOT NULL,
+    price       INT UNSIGNED         NULL,
+    rooms       INT UNSIGNED         NULL,
+    area        INT UNSIGNED         NULL,
+    built       INT UNSIGNED         NULL,
 
     PRIMARY KEY (id),
     FOREIGN KEY (broker_id)    REFERENCES user(id)

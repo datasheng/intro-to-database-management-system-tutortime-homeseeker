@@ -1,8 +1,12 @@
-import { getSchedules } from "@/db/homeseeker/schedule";
+"use server";
+
 import { Button, Card } from "@tremor/react";
+import { NextPage } from "next";
 import Link from "next/link";
 
-export default async function Home() {
+import { getSchedules } from "@/db/homeseeker/schedule";
+
+const Display: NextPage = async () => {
 	const schedules = await getSchedules();
 
 	return (
@@ -35,4 +39,6 @@ export default async function Home() {
 			</div>
 		</div>
 	);
-}
+};
+
+export default Display;

@@ -4,12 +4,9 @@ import { Button, Card, NumberInput, TextInput } from "@tremor/react";
 import { NextPage } from "next";
 import { useFormState } from "react-dom";
 
-import {
-	State,
-	registerProperty,
-} from "@/app/homeseeker/registerproperty/actions";
+import { State, registerProperty } from "./actions";
 
-const RegisterHome: NextPage = () => {
+const RegisterProperty: NextPage = () => {
 	const [state, formAction] = useFormState<State, FormData>(
 		registerProperty,
 		{},
@@ -97,4 +94,4 @@ const RegisterHome: NextPage = () => {
 	);
 };
 
-export default RegisterHome;
+export default RegisterProperty;

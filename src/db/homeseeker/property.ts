@@ -111,7 +111,7 @@ export async function getPropertyBySchedule(
 export async function createProperty(
 	broker_id: number,
 	address: string,
-	zipcode: number,
+	zipcode: string,
 	type: string,
 	price?: number,
 	rooms?: number,
