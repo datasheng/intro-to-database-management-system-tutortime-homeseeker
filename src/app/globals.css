@@ -9,3 +9,7 @@ a {
 a:visited {
     @apply text-violet-400;
 }
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+}

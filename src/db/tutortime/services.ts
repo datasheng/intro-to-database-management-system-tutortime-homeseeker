@@ -11,6 +11,18 @@ export interface Service extends RowDataPacket {
 	description?: string;
 }
 
+export type DaySchedule = { enabled: boolean; start?: string; end?: string };
+
+export type ServiceSchedule = {
+	sunday: DaySchedule;
+	monday: DaySchedule;
+	tuesday: DaySchedule;
+	wednesday: DaySchedule;
+	thursday: DaySchedule;
+	friday: DaySchedule;
+	saturday: DaySchedule;
+};
+
 /**
  * Retrieves all active services from database.
  */
@@ -38,16 +50,32 @@ export async function getServices(): Promise<Service[]> {
  * @returns id of newly created service
  */
 export async function createService(
-	name: string,
 	admin_id: number,
-	timezone: string,
+	name: string,
+	description: string | undefined,
+	active: boolean,
 	duration: number,
-	description?: string,
+	timezone: string,
+	schedule: ServiceSchedule,
 ): Promise<number> {
 	const [res] = await pool.execute<ResultSetHeader>(
-		`INSERT INTO tt_service (name, admin_id, timezone, duration, description)
-        VALUES (:name, :admin_id, :timezone, :duration, :description)`,
-		{ name, admin_id, timezone, duration, description },
+		`INSERT INTO tt_service (admin_id, name, description, active, duration, timezone)
+        VALUES (:admin_id, :name, :description, :active, :duration, :timezone)`,
+		{ admin_id, name, description, active, duration, timezone },
+	);
+
+	await Promise.all(
+		Object.values(schedule).map(({ enabled, start, end }, i) => {
+			if (!enabled) {
+				return;
+			}
+
+			return pool.execute(
+				`INSERT INTO tt_schedule (service_id, weekday, start, end)
+                VALUES (:service_id, :weekday, :start, :end)`,
+				{ service_id: res.insertId, weekday: i, start, end },
+			);
+		}),
 	);
 
 	return res.insertId;

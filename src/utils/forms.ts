@@ -1,4 +1,5 @@
-import { ZodError, ZodSchema } from "zod";
+import { remapKeys } from "@/utils/remap";
+import z, { ZodError, ZodSchema } from "zod";
 
 type FormSuccess<T> = { data: T };
 type FormError = { formError: string };
@@ -30,9 +31,10 @@ type InvalidFormData = { data: undefined; errors: FormError | FormFieldErrors };
 export function validateFormData<T>(
 	schema: ZodSchema<T>,
 	formData: FormData,
-): ValidFormData<T> | InvalidFormData {
+): ValidFormData<z.infer<ZodSchema<T>>> | InvalidFormData {
 	const rawValues = Object.fromEntries(formData);
-	const result = schema.safeParse(rawValues);
+	const remappedValues = remapKeys(rawValues);
+	const result = schema.safeParse(remappedValues);
 
 	if (!result.success) {
 		return { data: undefined, errors: zodErrorToFormStatus(result.error) };
