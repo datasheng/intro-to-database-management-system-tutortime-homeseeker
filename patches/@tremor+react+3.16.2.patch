@@ -1,0 +1,31 @@
+diff --git a/node_modules/@tremor/react/dist/index.d.ts b/node_modules/@tremor/react/dist/index.d.ts
+index bf0251f..7037f64 100644
+--- a/node_modules/@tremor/react/dist/index.d.ts
++++ b/node_modules/@tremor/react/dist/index.d.ts
+@@ -312,7 +312,7 @@ interface MultiSelectItemProps extends React$1.HTMLAttributes<HTMLLIElement> {
+ declare const MultiSelectItem: React$1.ForwardRefExoticComponent<MultiSelectItemProps & React$1.RefAttributes<HTMLLIElement>>;
+ 
+ interface BaseInputProps extends React$1.InputHTMLAttributes<HTMLInputElement> {
+-    type?: "text" | "password" | "email" | "url" | "number";
++    type?: "text" | "password" | "email" | "url" | "number" | "time";
+     defaultValue?: string | number;
+     value?: string | number;
+     icon?: React$1.ElementType | React$1.JSXElementConstructor<any>;
+@@ -430,7 +430,7 @@ interface TextareaProps extends React$1.TextareaHTMLAttributes<HTMLTextAreaEleme
+ declare const Textarea: React$1.ForwardRefExoticComponent<TextareaProps & React$1.RefAttributes<HTMLTextAreaElement>>;
+ 
+ type TextInputProps = Omit<BaseInputProps, "stepper" | "makeInputClassName"> & {
+-    type?: "text" | "password" | "email" | "url";
++    type?: "text" | "password" | "email" | "url" | "time";
+     defaultValue?: string;
+     value?: string;
+     onValueChange?: (value: string) => void;
+@@ -440,7 +440,7 @@ type TextInputProps = Omit<BaseInputProps, "stepper" | "makeInputClassName"> & {
+     disabled?: boolean;
+ };
+ declare const TextInput: React$1.ForwardRefExoticComponent<Omit<BaseInputProps, "stepper" | "makeInputClassName"> & {
+-    type?: "text" | "url" | "email" | "password" | undefined;
++    type?: "text" | "url" | "email" | "password" | "time" | undefined;
+     defaultValue?: string | undefined;
+     value?: string | undefined;
+     onValueChange?: ((value: string) => void) | undefined;
