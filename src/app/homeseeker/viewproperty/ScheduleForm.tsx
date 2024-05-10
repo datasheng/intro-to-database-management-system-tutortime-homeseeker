@@ -1,14 +1,20 @@
 "use client";
 
-import { makeSchedule } from "@/app/components/scheduleform/actions";
 import { Button, Card } from "@tremor/react";
 import { DatePicker, DatePickerValue } from "@tremor/react";
-import { useState } from "react";
+import React, { useState } from "react";
 
-const Scheduleform = ({
+import { makeSchedule } from "./actions";
+
+interface ScheduleFormProps {
+	property_id: number;
+	onSubmit: () => void;
+}
+
+export const ScheduleForm: React.FC<ScheduleFormProps> = ({
 	property_id,
 	onSubmit,
-}: { property_id: number; onSubmit: () => void }) => {
+}) => {
 	const [input, setInput] = useState({
 		start: "",
 		end: "",
@@ -101,5 +107,3 @@ const Scheduleform = ({
 		</div>
 	);
 };
-
-export default Scheduleform;

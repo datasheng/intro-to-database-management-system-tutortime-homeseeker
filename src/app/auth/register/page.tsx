@@ -72,7 +72,7 @@ const Register: NextPage = () => {
 						</Button>
 						<small>
 							Already have an account?{" "}
-							<Link href="/auth/sign-in">Sign in instead.</Link>
+							<Link href="/auth/sign-in">Sign in now.</Link>
 						</small>
 					</div>
 				</form>

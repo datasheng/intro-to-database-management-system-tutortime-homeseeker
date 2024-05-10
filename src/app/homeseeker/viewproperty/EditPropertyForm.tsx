@@ -2,13 +2,17 @@
 
 import { Property } from "@/db/homeseeker/property";
 import { Button, Card, NumberInput, TextInput } from "@tremor/react";
-import { useState } from "react";
+import React, { useState } from "react";
+
 import { deletePropertyById, updatePropertyDetails } from "./actions";
 
-const Editproperty = ({
-	property_id,
+interface EditPropertyFormProps {
+	property: Property;
+}
+
+export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 	property,
-}: { property_id: number; property: Property | null }) => {
+}) => {
 	const [editMode, setEditMode] = useState(false);
 	const [input, setInput] = useState({
 		address: property?.address,
@@ -22,7 +26,7 @@ const Editproperty = ({
 	const [error, setError] = useState<string | null>(null);
 
 	const handleDelete = async () => {
-		const success = await deletePropertyById(property_id);
+		const success = await deletePropertyById(property.property_id);
 		if (success) {
 			alert("Property deleted successfully");
 		} else {
@@ -40,7 +44,7 @@ const Editproperty = ({
 
 	const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const response = await updatePropertyDetails(property_id, input);
+		const response = await updatePropertyDetails(property.property_id, input);
 		if (response) {
 			if (typeof response === "string") {
 				setError(response);
@@ -133,5 +137,3 @@ const Editproperty = ({
 		</div>
 	);
 };
-
-export default Editproperty;

@@ -1,17 +1,19 @@
 "use client";
 
-import Appointmentform from "@/app/components/appointmentform/page";
+import { Button, Card } from "@tremor/react";
+import { NextPage } from "next";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+
 import { fetchUserDetails } from "@/app/user/actions";
 import { User } from "@/db/auth";
 import { Appointment } from "@/db/homeseeker/appointment";
 import { Property } from "@/db/homeseeker/property";
-import { Button, Card } from "@tremor/react";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { AppointmentForm } from "./AppointmentForm";
 import { fetchAppointments, fetchPropertyBySchedule } from "./actions";
 
-const Viewschedule = () => {
+const MakeAppointment: NextPage = () => {
 	const schedule_id = Number(useSearchParams().get("schedule"));
 	const [user, setUser] = useState<User | null>(null);
 	const [property, setProperty] = useState<Property | null>(null);
@@ -34,25 +36,24 @@ const Viewschedule = () => {
 		<div className="container">
 			<div className="flex flex-col items-center justify-center w-1/2 pr-4">
 				<div className="flex flex-col gap-5">
-					{appointment &&
-						appointment.map((appointment) => (
-							<Card key={appointment.id}>
-								<div className="mb-3 flex flex-col items-center">
-									<p>Appointments made already:</p>
-									<p className="text-slate-600 text-sm">
-										Start time: {new Date(appointment.start).toLocaleString()}
-									</p>
-									<p className="text-slate-600 text-sm">
-										End time: {new Date(appointment.end).toLocaleString()}
-									</p>
-								</div>
-							</Card>
-						))}
+					{appointment?.map((appointment) => (
+						<Card key={appointment.id}>
+							<div className="mb-3 flex flex-col items-center">
+								<p>Appointments made already:</p>
+								<p className="text-slate-600 text-sm">
+									Start time: {new Date(appointment.start).toLocaleString()}
+								</p>
+								<p className="text-slate-600 text-sm">
+									End time: {new Date(appointment.end).toLocaleString()}
+								</p>
+							</div>
+						</Card>
+					))}
 				</div>
 			</div>
 			{user ? (
 				user.id !== property?.broker_id && (
-					<Appointmentform schedule_id={schedule_id} />
+					<AppointmentForm schedule_id={schedule_id} />
 				)
 			) : (
 				<div className="grid place-items-center h-screen">
@@ -70,4 +71,4 @@ const Viewschedule = () => {
 	);
 };
 
-export default Viewschedule;
+export default MakeAppointment;
