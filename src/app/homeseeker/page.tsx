@@ -7,7 +7,7 @@ import Link from "next/link";
 import { getCurrentUser } from "@/app/cookies";
 import { getProperties } from "@/db/homeseeker/property";
 
-export async function filterPropertiesByUser() {
+async function filterPropertiesByUser() {
 	const properties = await getProperties();
 	const user = getCurrentUser();
 	// Not signed it so just display everything
