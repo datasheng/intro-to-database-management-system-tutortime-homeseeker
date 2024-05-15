@@ -8,6 +8,7 @@ export default function Home() {
 			<p>
 				db contains the different CRUD operations need to communicate with SQL.
 			</p>
+
 		</div>
 	);
 }

@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import type React from "react";
 
 export const Navbar: React.FC = () => (
 	<nav className="bg-white border-b-4 border-black">
 		<ul className="flex flex-row justify-between items-center p-4">
 			<li>
-				<Link href="/public">
+				<Link href="/">
 					<span className="text-black">Home</span>
 				</Link>
 			</li>

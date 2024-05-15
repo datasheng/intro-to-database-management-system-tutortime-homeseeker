@@ -3,8 +3,8 @@
 import { cookies } from "next/headers";
 
 import { encryptCookie } from "@/app/cookies";
-import { User, createUser } from "@/db/auth";
-import { FormStatus, validateFormData } from "@/utils/forms";
+import { type User, createUser } from "@/db/auth";
+import { type FormStatus, validateFormData } from "@/utils/forms";
 
 import { registerSchema } from "./schema";
 
