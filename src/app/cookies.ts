@@ -1,5 +1,5 @@
 import { createCipheriv, createDecipheriv } from "node:crypto";
-import { User } from "@/db/auth";
+import type { User } from "@/db/auth";
 import { cookies } from "next/headers";
 
 const ALGO = "aes-256-cbc";
