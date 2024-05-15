@@ -14,7 +14,6 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
 	schedule_id,
 }) => {
 	const [schedule, setScheule] = useState<Schedule | null>(null);
-	// Get the date input
 	const [input, setInput] = useState({
 		start: "",
 		end: "",

@@ -10,10 +10,12 @@ export const newPropertySchema = z.object({
 			message: "Invalid zipcode",
 			path: ["zipcode"],
 		}),
-	type: z.enum(["rent", "sale"], {
-		required_error: "Required",
-		invalid_type_error: "Must be 'rent' or 'sale'",
-	}),
+	type: z.string()
+		.min(1, "Required")
+		.refine((value) => /(rent|sale)/i.test(value), {
+			message: "Must include 'rent' or 'sale'",
+			path: ["type"],
+		}),
 	rooms: z.coerce
 		.number({ required_error: "Required" })
 		.min(0, "Cannot be negative"),

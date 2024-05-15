@@ -33,7 +33,7 @@ const ViewProperty: NextPage = () => {
 		fetchDetails();
 	}, [property_id]);
 
-	const handleFormSubmit = () => {
+	const handleRefresh = () => {
 		router.refresh();
 	};
 
@@ -47,10 +47,10 @@ const ViewProperty: NextPage = () => {
 							<p>Address: {property.address}</p>
 							<p>Zipcode: {property.zipcode}</p>
 							<p>Type: {property.type}</p>
-							{property.price ? <p>Asking price: {property.price}</p> : null}
-							{property.area ? <p>Area: {property.area}</p> : null}
-							{property.rooms ? <p>Rooms: {property.rooms}</p> : null}
-							{property.built ? <p>Year built: {property.built}</p> : null}
+							<p>Asking price: {property.price}</p>
+							<p>Area: {property.area}</p>
+							<p>Rooms: {property.rooms}</p>
+							<p>Year built: {property.built}</p>
 						</Card>
 						<div className="flex flex-col gap-5">
 							{schedules ? (
@@ -84,10 +84,10 @@ const ViewProperty: NextPage = () => {
 				) : null}
 			</div>
 			{user && user.id === property?.broker_id && (
-				<EditPropertyForm property={property} />
+				<EditPropertyForm property={property} onSubmit={handleRefresh} />
 			)}
 			{user && user.id === property?.broker_id && (
-				<ScheduleForm property_id={property_id} onSubmit={handleFormSubmit} />
+				<ScheduleForm property_id={property_id} onSubmit={handleRefresh} />
 			)}
 		</div>
 	);

@@ -10,3 +10,15 @@ CREATE TABLE user (
     PRIMARY KEY (id),
     UNIQUE (email)
 );
+
+CREATE TABLE transaction (
+    id            INT UNSIGNED   NOT NULL AUTO_INCREMENT,
+    payee_id      INT UNSIGNED   NOT NULL,
+    recipient_id  INT UNSIGNED   NOT NULL,
+    amount        FLOAT UNSIGNED NOT NULL,
+    description   TEXT           NULL,
+
+    PRIMARY KEY (id),
+    FOREIGN KEY (payee_id)      REFERENCES user(id),
+    FOREIGN KEY (recipient_id)  REFERENCES user(id)
+)

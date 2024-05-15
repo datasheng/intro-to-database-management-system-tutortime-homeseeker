@@ -9,6 +9,8 @@ import {
 } from "@/db/homeseeker/appointment";
 import { getPropertyBySchedule } from "@/db/homeseeker/property";
 import { getScheduleByID } from "@/db/homeseeker/schedule";
+import { createTransaction } from "@/db/transaction";
+import { getUserByScheduleID } from "@/db/auth";
 
 export async function makeAppointment(
 	schedule_id: number,
@@ -69,6 +71,15 @@ export async function makeAppointment(
 		}
 	}
 
+	// Calculate appointment duration and amount which is 5 cent per minute
+	const amount = 0.05 * duration;
+
+	// Get the property owner id
+	const owner = await getUserByScheduleID(schedule_id);
+	if (!owner) {
+		return "Failed to owner details.";
+	}
+
 	// Make the appointment
 	const appointment_id = await createAppointment(
 		schedule_id as number,
@@ -78,6 +89,17 @@ export async function makeAppointment(
 	);
 	if (!appointment_id) {
 		return "Failed creating appointment.";
+	}
+
+	// Create the transaction
+	const transaction_id = await createTransaction(
+		user.id as number,
+		owner.id as number,
+		amount as number,
+		`${user.first_name} ${user.last_name} owes $${amount} to ${owner.first_name} ${owner.last_name}` as string
+	)
+	if (!transaction_id) {
+		return "Failed creating transaction.";
 	}
 
 	// Get the appointment so it can be returned
