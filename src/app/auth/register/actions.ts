@@ -27,7 +27,7 @@ export async function register(
 		return { fieldErrors: { email: "Email already registered." } };
 	}
 
-	const user: User = { id, first_name, last_name, email };
+	const user: User = { id, first_name, last_name, email, is_admin: 0 };
 
 	cookies().set({
 		name: "session",
