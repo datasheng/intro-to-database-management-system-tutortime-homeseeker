@@ -5,16 +5,18 @@ VALUES (1, 'Michael', 'Romashov', 'mromashov@icloud.com', '$argon2id$v=19$m=6553
 INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
 VALUES (2, 'Joseph', 'Platt', 'jplatt001@citymail.cuny.edu', '', 1);
 INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
-VALUES (3, 'Tyler', 'Ortiz', 'idk@gmail.com', '', 1);
+VALUES (3, 'Tyler', 'Ortiz', 'tortiz003@citymail.cuny.edu', '', 1);
 INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
 VALUES (4, 'James', 'Zou', 'zoujames97@gmail.com', '', 1);
 INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
-VALUES (4, 'Kevin', 'Zheng', 'kevinzheng700@gmail.com', '', 1);
+VALUES (5, 'Kevin', 'Zheng', 'kevinzheng700@gmail.com', '', 1);
 
 INSERT INTO tt_service (id, name, admin_id, timezone, duration, active, description)
-VALUES (1, 'CS/Math Tutoring', 1, 'America/New_York', 60, true, 'Get help for any MATH or CSC courses!');
+VALUES (1, 'CS/Math Tutoring', 1, 'America/New_York', 60, true, 'Get help for any MATH or CSC course!');
 INSERT INTO tt_service (id, name, admin_id, timezone, duration, active, description)
-VALUES (2, 'Physics Tutoring', 2, 'America/New_York', 45, false, 'Get help for any PHYS courses! (Note: Currently closed for spring break)');
+VALUES (2, 'Physics Tutoring', 2, 'America/New_York', 45, false, 'Get help for any PHYS course! (Note: Currently closed for spring break)');
+INSERT INTO tt_service (id, name, admin_id, timezone, duration, active, description)
+VALUES (3, 'Chemistry Tutoring', 2, 'America/New_York', 60, true, 'Get help for any Chemistry course!');
 
 INSERT INTO tt_schedule (service_id, weekday, start, end)
 VALUES (1, 2, '10:00', '19:00');
@@ -22,6 +24,10 @@ INSERT INTO tt_schedule (service_id, weekday, start, end)
 VALUES (1, 3, '10:00', '19:00');
 INSERT INTO tt_schedule (service_id, weekday, start, end)
 VALUES (1, 4, '7:30', '16:00');
+INSERT INTO tt_schedule (service_id, weekday, start, end)
+VALUES (3, 1, '12:30', '17:30');
+INSERT INTO tt_schedule (service_id, weekday, start, end)
+VALUES (3, 5, '12:30', '17:30');
 
 INSERT INTO hs_property (id, broker_id, address, zipcode, type, price, rooms, area, built)
 VALUES
