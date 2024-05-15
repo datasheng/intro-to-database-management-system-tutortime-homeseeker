@@ -26,8 +26,9 @@ export async function authenticate(
 	if (!user) {
 		return { formError: "Failed to authenticate user." };
 	}
-	if(user){
-		console.log("Log in successful", user)
+
+	if (user) {
+		console.log("Log in successful", user);
 	}
 
 	cookies().set({
