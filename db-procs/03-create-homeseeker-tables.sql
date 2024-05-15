@@ -1,10 +1,11 @@
+USE bookings_db;
 /*Home Seeker*/
 CREATE TABLE hs_property (
     id          INT UNSIGNED         NOT NULL AUTO_INCREMENT,
     broker_id   INT UNSIGNED         NOT NULL,
     address     VARCHAR(64)          NOT NULL,
     zipcode     CHAR(5)              NOT NULL,
-    type        ENUM('rent', 'sale') NOT NULL,
+    type        VARCHAR(64)          NOT NULL,
     price       INT UNSIGNED         NULL,
     rooms       INT UNSIGNED         NULL,
     area        INT UNSIGNED         NULL,

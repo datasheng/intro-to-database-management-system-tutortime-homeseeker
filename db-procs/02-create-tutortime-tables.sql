@@ -1,3 +1,4 @@
+USE bookings_db;
 /*Tutor Time*/
 CREATE TABLE tt_service (
     id          INT UNSIGNED NOT NULL AUTO_INCREMENT,

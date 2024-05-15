@@ -3,32 +3,34 @@
 import { Property } from "@/db/homeseeker/property";
 import { Button, Card, NumberInput, TextInput } from "@tremor/react";
 import React, { useState } from "react";
-
 import { deletePropertyById, updatePropertyDetails } from "./actions";
 
 interface EditPropertyFormProps {
 	property: Property;
+	onSubmit: () => void;
 }
 
 export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 	property,
+	onSubmit
 }) => {
 	const [editMode, setEditMode] = useState(false);
 	const [input, setInput] = useState({
-		address: property?.address,
-		zipcode: property?.zipcode,
-		type: property?.type,
-		rooms: property?.rooms,
-		area: property?.area,
-		price: property?.price,
-		built: property?.built,
+		address: property.address,
+		zipcode: property.zipcode,
+		type: property.type,
+		rooms: property.rooms,
+		area: property.area,
+		price: property.price,
+		built: property.built,
 	} as Partial<Property>);
 	const [error, setError] = useState<string | null>(null);
 
 	const handleDelete = async () => {
-		const success = await deletePropertyById(property.property_id);
+		const success = await deletePropertyById(property.id);
 		if (success) {
 			alert("Property deleted successfully");
+			onSubmit();
 		} else {
 			alert("Failed to delete the property");
 		}
@@ -44,14 +46,14 @@ export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 
 	const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const response = await updatePropertyDetails(property.property_id, input);
+		const response = await updatePropertyDetails(property.id, input);
 		if (response) {
 			if (typeof response === "string") {
 				setError(response);
 			} else {
 				setError(null);
 				setEditMode(false);
-				window.location.reload();
+				onSubmit();
 			}
 		} else {
 			console.log(response);
@@ -96,24 +98,28 @@ export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 								value={input.rooms}
 								onChange={handleChange}
 								placeholder="Rooms"
+								required
 							/>
 							<NumberInput
 								name="area"
 								value={input.area}
 								onChange={handleChange}
 								placeholder="Area"
+								required
 							/>
 							<NumberInput
 								name="price"
 								value={input.price}
 								onChange={handleChange}
 								placeholder="Price"
+								required
 							/>
 							<NumberInput
 								name="built"
 								value={input.built}
 								onChange={handleChange}
 								placeholder="Year Built"
+								required
 							/>
 							<div className="h-4">
 								{error && (

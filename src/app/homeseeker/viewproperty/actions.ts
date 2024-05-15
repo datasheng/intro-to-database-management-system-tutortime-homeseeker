@@ -39,13 +39,7 @@ export async function updatePropertyDetails(
 		if (!address) {
 			return "Address is required";
 		}
-		if (!zipcode) {
-			return "Zipcode is required";
-		}
-		if (!type) {
-			return "Type is required";
-		}
-		if (!type?.includes("sale") && !type?.includes("rent")) {
+		if (!type?.toLocaleLowerCase()?.includes("sale") && !type?.toLocaleLowerCase().includes("rent")) {
 			return "Type must include for sale or for rent.";
 		}
 		if (rooms && rooms < 1) {
@@ -60,7 +54,14 @@ export async function updatePropertyDetails(
 		if (built && built < 1) {
 			return "Year must be a positive integer.";
 		}
-
+		console.log(address);
+		console.log(zipcode);
+		console.log(type);
+		console.log(rooms);
+		console.log(area);
+		console.log(built);
+		console.log(price);
+		console.log(id);
 		await updateProperty(id, address, zipcode, type, price, rooms, area, built);
 		return true;
 	} catch (error) {

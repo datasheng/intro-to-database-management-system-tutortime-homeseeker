@@ -93,3 +93,24 @@ export async function createUser(
 		return null;
 	}
 }
+
+/**
+ * Retrieve the user of a schedule from database.
+ */
+export async function getUserByScheduleID(
+	schedule_id: number,
+): Promise<User | null> {
+	console.log(schedule_id);
+	const [res] = await pool.execute<UserWithHash[]>(
+		`SELECT U.id, U.first_name, U.last_name, U.email
+		FROM user AS U
+		INNER JOIN hs_property as P ON P.broker_id = U.id
+		INNER JOIN hs_schedule as S on S.property_id = P.id
+        WHERE S.id = :schedule_id`,
+		{ schedule_id },
+	);
+	if (res.length !== 1) {
+		return null;
+	}
+	return res[0];
+}

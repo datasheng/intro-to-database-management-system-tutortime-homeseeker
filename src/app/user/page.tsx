@@ -3,25 +3,32 @@
 import { User } from "@/db/auth";
 import { Appointment } from "@/db/homeseeker/appointment";
 import { Property } from "@/db/homeseeker/property";
+import { Transaction } from "@/db/transaction";
 import { Button, Card } from "@tremor/react";
 import { NextPage } from "next";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
 	fetchUserDetails,
+	getPayeePayments,
 	getPropertyAppointments,
+	getRecipientPayments,
 	getUserAppointments,
 	getUserProperties,
+	getAmount
 } from "./actions";
 
 const Account: NextPage = () => {
 	const [user, setUser] = useState<User | null>(null);
 	const [properties, setProperties] = useState<Property[] | null>(null);
-	const [propertyAppointments, setpropertyAppointments] = useState<
-		Appointment[] | null
-	>(null);
+	const [propertyAppointments, setPropertyAppointments] = useState<Appointment[] | null>(null);
 	const [appointments, setAppointments] = useState<Appointment[] | null>(null);
+	const [transactions, setTransactions] = useState<Transaction[] | null>(null);
+	const [payments, setPayments] = useState<Transaction[] | null>(null);
+	const [amount, setAmount] = useState({
+		owned: 0,
+		earned: 0
+	})
 
 	useEffect(() => {
 		const fetchCurrentUser = async () => {
@@ -35,13 +42,20 @@ const Account: NextPage = () => {
 		const fetchDetails = async () => {
 			try {
 				const propertiesData = await getUserProperties(Number(user?.id));
-				const propertyAppointmentData = await getPropertyAppointments(
+				const propertyAppointmentsData = await getPropertyAppointments(
 					Number(user?.id),
 				);
-				const appointmentData = await getUserAppointments(Number(user?.id));
+				const appointmentsData = await getUserAppointments(Number(user?.id));
+				const transactionsData = await getPayeePayments(Number(user?.id));
+				const paymentsData = await getRecipientPayments(Number(user?.id));
+				//const amounts = await getAmount(Number(user?.id));
+				console.log(amount);
 				setProperties(propertiesData);
-				setpropertyAppointments(propertyAppointmentData);
-				setAppointments(appointmentData);
+				setPropertyAppointments(propertyAppointmentsData);
+				setAppointments(appointmentsData);
+				setTransactions(transactionsData);
+				setPayments(paymentsData);
+				//setAmount(amounts);
 			} catch (error) {
 				console.log(error);
 			}
@@ -53,7 +67,7 @@ const Account: NextPage = () => {
 		<div>
 			{user ? (
 				<div className="flex flex-row gap-10 m-10">
-					<div className="flex flex-col items-center justify-center pr-4">
+					<div className="flex flex-col items-center pr-4">
 						<h1 className="mb-5 mt-5 text-tremor-title font-medium text-center">
 							Welcome, {user.first_name} {user.last_name}!
 						</h1>
@@ -100,29 +114,71 @@ const Account: NextPage = () => {
 								</Link>
 							)}
 						</Card>
+						<Card className="mx-auto mt-5 mb-5">
+							<div className="flex flex-col items-center justify-center">
+								<h2>Your Transactions:</h2>
+								{transactions && transactions.length > 0 ? (
+									<div>
+										{transactions.map((transaction) => (
+											<div key={transaction.id}>
+												{transaction.description}
+											</div>
+										))}
+									</div>
+								) : (
+									<p>You have no pending fees.</p>
+								)}
+								<p>Total you own: {amount.owned}</p>
+							</div>
+							<div className="flex flex-col items-center justify-center">
+								<h2>Your anticpated Payments:</h2>
+								{payments && payments.length > 0 ? (
+									<div>
+										{payments.map((payment) => (
+											<div key={payment.id}>
+												{payment.description}
+											</div>
+										))}
+									</div>
+								) : (
+									<p>You have upcoming payments.</p>
+								)}
+								<p>Total you earned: {amount.earned}</p>
+							</div>
+						</Card>
 					</div>
 					<div>
-						<Card className="max-w-96 mx-auto overflow-y-auto flex-grow">
-							{appointments && appointments.length > 0 ? (
+						<Card className="mx-auto overflow-y-auto h-96">
+							{propertyAppointments && propertyAppointments.length > 0 ? (
 								<div className="flex flex-col items-center justify-center">
 									<h2 className="text-tremor-title font-medium text-center">
 										Appointments for your property:
 									</h2>
 									<ul>
-										{appointments.map((appointment) => (
+										{propertyAppointments.map((appointment) => (
 											<li key={appointment.id}>
 												<Card className="p-5 w-100 mb-5">
-													<div className="mb-3 flex flex-row items-center gap-10">
-														<p>
-															Start time:
-															{new Date(appointment.start).toLocaleString()}
-														</p>
-														<p>
-															EndTime:{" "}
-															{new Date(appointment.end).toLocaleString()}
-														</p>
-														<p>By: {appointment.user_id}</p>
-													</div>
+													<Link
+														href={`/homeseeker/viewproperty/?id=${appointment.id}`}
+														className="text-black visited:text-black"
+													>
+														<div className="mb-3 flex flex-row items-center gap-10">
+															<div>
+																<p>Location: {appointment.address}</p>
+																<p>By: {appointment.first_name} {appointment.last_name}</p>
+																<p>{appointment.type}</p></div>
+															<div>
+																<p>
+																	Start Time:
+																	{new Date(appointment.start).toLocaleString()}
+																</p>
+																<p>
+																	End Time:{" "}
+																	{new Date(appointment.end).toLocaleString()}
+																</p>
+															</div>
+														</div>
+													</Link>
 												</Card>
 											</li>
 										))}
@@ -135,27 +191,37 @@ const Account: NextPage = () => {
 							)}
 						</Card>
 					</div>
-					<Card className="max-w-96 mx-auto overflow-y-auto flex-grow">
-						{propertyAppointments && propertyAppointments.length > 0 ? (
+					<Card className="h-96 mx-auto overflow-y-auto">
+						{appointments && appointments.length > 0 ? (
 							<div className="flex flex-col items-center justify-center">
 								<h2 className="text-tremor-title font-medium text-center">
-									Appointments for your property:
+									Upcoming Appointments
 								</h2>
 								<ul>
-									{propertyAppointments.map((appointment) => (
+									{appointments.map((appointment) => (
 										<li key={appointment.id}>
-											<Card className="p-5 w-100 mb-5">
-												<div className="mb-3 flex flex-row items-center gap-10">
-													<p>
-														Start time:
-														{new Date(appointment.start).toLocaleString()}
-													</p>
-													<p>
-														EndTime:{" "}
-														{new Date(appointment.end).toLocaleString()}
-													</p>
-													<p>By: {appointment.user_id}</p>
-												</div>
+											<Card className="p-5 mb-5">
+												<Link
+													href={`/homeseeker//viewproperty/?id=${appointment.id}`}
+													className="text-black visited:text-black"
+												>
+													<div className="mb-3 flex flex-row items-center gap-10">
+														<div>
+															<p>Location: {appointment.address}</p>
+															<p>By: {appointment.first_name} {appointment.last_name}</p>
+															<p>{appointment.type}</p></div>
+														<div>
+															<p>
+																Start Time:
+																{new Date(appointment.start).toLocaleString()}
+															</p>
+															<p>
+																End Time:{" "}
+																{new Date(appointment.end).toLocaleString()}
+															</p>
+														</div>
+													</div>
+												</Link>
 											</Card>
 										</li>
 									))}

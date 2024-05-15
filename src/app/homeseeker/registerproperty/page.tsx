@@ -73,7 +73,7 @@ const RegisterProperty: NextPage = () => {
 						</div>
 						<div>
 							<NumberInput
-								name="built"
+								name="year"
 								placeholder="Year built"
 								error={!!state.fieldErrors?.year}
 								errorMessage={state.fieldErrors?.year}

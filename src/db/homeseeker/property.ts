@@ -8,10 +8,10 @@ export interface Property extends RowDataPacket {
 	address: string;
 	zipcode: number;
 	type: string;
-	price?: number;
-	rooms?: number;
-	area?: number;
-	built?: number;
+	price: number;
+	rooms: number;
+	area: number;
+	built: number;
 }
 
 /**
@@ -89,7 +89,7 @@ export async function getPropertyBySchedule(
 	schedule_id: number,
 ): Promise<Property | null> {
 	const [res] = await pool.execute<Property[]>(
-		`SELECT P.broker_id, P.address, P.zipcode, P.type, P.price, P.rooms, P.area, P.built, S.start, S.end
+		`SELECT P.id, P.broker_id, P.address, P.zipcode, P.type, P.price, P.rooms, P.area, P.built, S.start, S.end
 		FROM hs_property AS P
 		INNER JOIN hs_schedule as S
         ON S.property_id = P.id
@@ -113,10 +113,10 @@ export async function createProperty(
 	address: string,
 	zipcode: string,
 	type: string,
-	price?: number,
-	rooms?: number,
-	area?: number,
-	built?: number,
+	price: number,
+	rooms: number,
+	area: number,
+	built: number,
 ): Promise<number | null> {
 	try {
 		const params = {
@@ -124,10 +124,10 @@ export async function createProperty(
 			address,
 			zipcode,
 			type,
-			price: price !== undefined ? price : null,
-			rooms: rooms !== undefined ? rooms : null,
-			area: area !== undefined ? area : null,
-			built: built !== undefined ? built : null,
+			price,
+			rooms,
+			area,
+			built
 		};
 
 		const [res] = await pool.execute<ResultSetHeader>(
@@ -156,22 +156,22 @@ export async function deleteProperty(id: number): Promise<void> {
  */
 export async function updateProperty(
 	id: number,
-	address?: string,
-	zipcode?: number,
-	type?: string,
-	price?: number,
-	rooms?: number,
-	area?: number,
-	built?: number,
+	address: string,
+	zipcode: number,
+	type: string,
+	price: number,
+	rooms: number,
+	area: number,
+	built: number,
 ): Promise<void> {
 	const params = {
 		address,
 		zipcode,
 		type,
-		price: price !== undefined ? price : null,
-		rooms: rooms !== undefined ? rooms : null,
-		area: area !== undefined ? area : null,
-		built: built !== undefined ? built : null,
+		price,
+		rooms,
+		area,
+		built,
 		id,
 	};
 	await pool.execute(

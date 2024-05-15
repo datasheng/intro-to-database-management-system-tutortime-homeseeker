@@ -27,11 +27,10 @@ export async function getSchedulesByPropertyID(
 	property_id: number,
 ): Promise<Schedule[]> {
 	const [res] = await pool.execute<Schedule[]>(
-		`SELECT start, end FROM hs_schedule
+		`SELECT id, start, end FROM hs_schedule
         WHERE property_id = :property_id`,
 		{ property_id },
 	);
-
 	return res;
 }
 
@@ -39,7 +38,7 @@ export async function getScheduleByID(
 	schedule_id: number,
 ): Promise<Schedule | null> {
 	const [res] = await pool.execute<Schedule[]>(
-		`SELECT start, end FROM hs_schedule
+		`SELECT id, start, end FROM hs_schedule
         WHERE id = :schedule_id`,
 		{ schedule_id },
 	);
@@ -58,7 +57,7 @@ export async function getUpcomingSchedules(
 	property_id: number,
 ): Promise<Schedule[]> {
 	const [res] = await pool.execute<Schedule[]>(
-		`SELECT start, end FROM hs_schedule WHERE property_id = :property_id
+		`SELECT id, start, end FROM hs_schedule WHERE property_id = :property_id
         AND start > CURRENT_TIMESTAMP`,
 		{ property_id },
 	);

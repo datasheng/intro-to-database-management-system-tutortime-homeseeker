@@ -27,7 +27,6 @@ const MakeAppointment: NextPage = () => {
 			setUser(userData);
 			setAppointments(appointmentData);
 			setProperty(propertyData);
-			console.log(userData);
 		};
 		fetchDetails();
 	}, [schedule_id]);
