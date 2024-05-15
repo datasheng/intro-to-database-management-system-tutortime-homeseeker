@@ -55,5 +55,6 @@ export function getCurrentUser(): User | null {
 	if (!decryptedUser || typeof decryptedUser.id !== "number") {
 		return null;
 	}
+	console.log(decryptedUser);
 	return decryptedUser;
 }

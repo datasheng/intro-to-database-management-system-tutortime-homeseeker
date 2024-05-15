@@ -91,7 +91,7 @@ export async function makeAppointment(
 		return "Failed creating appointment.";
 	}
 
-	// Create the transaction
+	// Create the transaction between the two parties
 	const transaction_id = await createTransaction(
 		user.id as number,
 		owner.id as number,
@@ -100,6 +100,17 @@ export async function makeAppointment(
 	)
 	if (!transaction_id) {
 		return "Failed creating transaction.";
+	}
+
+	// Create a fee for the user
+	const fee_id = await createTransaction(
+		user.id as number,
+		owner.id as number,
+		amount as number,
+		`${user.first_name} ${user.last_name} owes $${amount} to ${owner.first_name} ${owner.last_name}` as string
+	)
+	if (!fee_id) {
+		return "Failed assigning fees.";
 	}
 
 	// Get the appointment so it can be returned

@@ -22,11 +22,12 @@ export interface UserWithHash extends RowDataPacket {
 	last_name: string;
 	email: string;
 	password_hash: string;
+	is_admin: number;
 }
 
 export type User = Pick<
 	UserWithHash,
-	"id" | "first_name" | "last_name" | "email"
+	"id" | "first_name" | "last_name" | "email" | "is_admin"
 >;
 
 /**
@@ -44,7 +45,8 @@ export async function getUser(
             first_name,
             last_name,
             email,
-            password_hash
+            password_hash,
+			is_admin
         FROM user
         WHERE user.email = :email`,
 		{ email },
@@ -62,6 +64,7 @@ export async function getUser(
 			first_name: user.first_name,
 			last_name: user.last_name,
 			email: user.email,
+			is_admin: user.is_admin
 		};
 	}
 
@@ -83,8 +86,8 @@ export async function createUser(
 
 	try {
 		const [res] = await pool.execute<ResultSetHeader>(
-			`INSERT INTO user (first_name, last_name, email, password_hash)
-            VALUES (:first_name, :last_name, :email, :hash)`,
+			`INSERT INTO user (first_name, last_name, email, password_hash, is_admin)
+            VALUES (:first_name, :last_name, :email, :hash, 1)`,
 			{ first_name, last_name, email, hash },
 		);
 
@@ -100,7 +103,6 @@ export async function createUser(
 export async function getUserByScheduleID(
 	schedule_id: number,
 ): Promise<User | null> {
-	console.log(schedule_id);
 	const [res] = await pool.execute<UserWithHash[]>(
 		`SELECT U.id, U.first_name, U.last_name, U.email
 		FROM user AS U

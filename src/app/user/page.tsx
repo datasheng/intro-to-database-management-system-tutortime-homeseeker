@@ -71,10 +71,51 @@ const Account: NextPage = () => {
 						<h1 className="mb-5 mt-5 text-tremor-title font-medium text-center">
 							Welcome, {user.first_name} {user.last_name}!
 						</h1>
-						<Card className="mx-auto mb-5">
-							<h2>Your id: {user.id}</h2>
-							<h2>Your email: {user.email}</h2>
+						<Card className="mx-auto mt-5 mb-5 h-96 overflow-y-auto">
+							<>
+								<h2>Your id: {user.id}</h2>
+								<h2>Your email: {user.email}</h2>
+								{user.is_admin ? (
+									<div>
+										<h2>Total Revenue: {amount.earned}</h2>
+									</div>
+								) : (
+									<div>
+										<div className="flex flex-col">
+											{transactions && transactions.length > 0 ? (
+
+												<div>
+													<h2>Your Transactions:</h2>
+													{transactions.map((transaction) => (
+														<div key={transaction.id}>
+															{transaction.description}
+														</div>
+													))}
+												</div>
+											) : (
+												<p>You have no pending fees.</p>
+											)}
+											<p>Total you owe: {amount.owned}</p>
+
+											{payments && payments.length > 0 ? (
+												<div>
+													<h2>Your Anticipated Payments:</h2>
+													{payments.map((payment) => (
+														<div key={payment.id}>
+															{payment.description}
+														</div>
+													))}
+												</div>
+											) : (
+												<p>You have no upcoming payments.</p>
+											)}
+											<p>Total you earned: {amount.earned}</p>
+										</div>
+									</div>
+								)}
+							</>
 						</Card>
+
 						<Card className="mx-auto h-96 overflow-y-auto">
 							{properties && properties.length > 0 ? (
 								<div className="flex flex-col items-center justify-center">
@@ -113,38 +154,6 @@ const Account: NextPage = () => {
 									</span>
 								</Link>
 							)}
-						</Card>
-						<Card className="mx-auto mt-5 mb-5">
-							<div className="flex flex-col items-center justify-center">
-								<h2>Your Transactions:</h2>
-								{transactions && transactions.length > 0 ? (
-									<div>
-										{transactions.map((transaction) => (
-											<div key={transaction.id}>
-												{transaction.description}
-											</div>
-										))}
-									</div>
-								) : (
-									<p>You have no pending fees.</p>
-								)}
-								<p>Total you own: {amount.owned}</p>
-							</div>
-							<div className="flex flex-col items-center justify-center">
-								<h2>Your anticpated Payments:</h2>
-								{payments && payments.length > 0 ? (
-									<div>
-										{payments.map((payment) => (
-											<div key={payment.id}>
-												{payment.description}
-											</div>
-										))}
-									</div>
-								) : (
-									<p>You have upcoming payments.</p>
-								)}
-								<p>Total you earned: {amount.earned}</p>
-							</div>
 						</Card>
 					</div>
 					<div>

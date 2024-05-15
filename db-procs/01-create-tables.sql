@@ -6,6 +6,7 @@ CREATE TABLE user (
     last_name     VARCHAR(35)  NOT NULL,
     email         VARCHAR(255) NOT NULL,
     password_hash CHAR(97)     NOT NULL,
+    is_admin      TINYINT(1)   NOT NULL,
 
     PRIMARY KEY (id),
     UNIQUE (email)
