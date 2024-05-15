@@ -3,8 +3,8 @@
 import { cookies } from "next/headers";
 
 import { encryptCookie } from "@/app/cookies";
-import { User, getUser } from "@/db/auth";
-import { FormStatus, validateFormData } from "@/utils/forms";
+import { type User, getUser } from "@/db/auth";
+import { type FormStatus, validateFormData } from "@/utils/forms";
 
 import { signInSchema } from "./schema";
 
@@ -25,6 +25,9 @@ export async function authenticate(
 	const user = await getUser(email, password);
 	if (!user) {
 		return { formError: "Failed to authenticate user." };
+	}
+	if(user){
+		console.log("Log in successful", user)
 	}
 
 	cookies().set({
