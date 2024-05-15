@@ -1,11 +1,12 @@
 "use client";
 
 import { Button, Card, TextInput } from "@tremor/react";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 
-import { State, authenticate } from "@/app/auth/sign-in/actions";
+import { type State, authenticate } from "@/app/auth/sign-in/actions";
+import { redirect } from "next/navigation";
 
 const SignIn: NextPage = () => {
 	const [state, formAction] = useFormState<State, FormData>(authenticate, {});
@@ -51,6 +52,7 @@ const SignIn: NextPage = () => {
 					</div>
 				</form>
 			</Card>
+			{state.data && redirect("/user")}
 		</div>
 	);
 };

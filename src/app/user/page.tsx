@@ -61,7 +61,7 @@ const Account: NextPage = () => {
 			}
 		};
 		fetchDetails();
-	}, [user]);
+	}, [user, amount]);
 
 	return (
 		<div>
