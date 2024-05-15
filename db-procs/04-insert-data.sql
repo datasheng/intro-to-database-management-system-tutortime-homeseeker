@@ -1,13 +1,15 @@
 USE bookings_db;
 
-INSERT INTO user (id, first_name, last_name, email, password_hash)
-VALUES (1, 'Michael', 'Romashov', 'mromashov@icloud.com', '$argon2id$v=19$m=65536,t=2,p=1$/IVjWtWIb7CH7T2F6lyMrg$7ErKzfIG1pkkXIYaM5duTOV9e7tbDdE1AXyESlC4kFU');
-INSERT INTO user (id, first_name, last_name, email, password_hash)
-VALUES (2, 'Joseph', 'Platt', 'jplatt001@citymail.cuny.edu', '');
-INSERT INTO user (id, first_name, last_name, email, password_hash)
-VALUES (3, 'Tyler', 'Ortiz', 'idk@gmail.com', '');
-INSERT INTO user (id, first_name, last_name, email, password_hash)
-VALUES (4, 'James', 'Zou', 'zoujames97@gmail.com', '');
+INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
+VALUES (1, 'Michael', 'Romashov', 'mromashov@icloud.com', '$argon2id$v=19$m=65536,t=2,p=1$/IVjWtWIb7CH7T2F6lyMrg$7ErKzfIG1pkkXIYaM5duTOV9e7tbDdE1AXyESlC4kFU', 1);
+INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
+VALUES (2, 'Joseph', 'Platt', 'jplatt001@citymail.cuny.edu', '', 1);
+INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
+VALUES (3, 'Tyler', 'Ortiz', 'idk@gmail.com', '', 1);
+INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
+VALUES (4, 'James', 'Zou', 'zoujames97@gmail.com', '', 1);
+INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
+VALUES (4, 'Kevin', 'Zheng', 'kevinzheng700@gmail.com', '', 1);
 
 INSERT INTO tt_service (id, name, admin_id, timezone, duration, active, description)
 VALUES (1, 'CS/Math Tutoring', 1, 'America/New_York', 60, true, 'Get help for any MATH or CSC courses!');
