@@ -39,10 +39,11 @@ export async function getRecipientPayments(user_id: number) {
 }
 
 export async function getAmount(user_id: number) {
-	const bills = getBillByUserID(user_id);
-	const payments = getPaymentByUserID(user_id);
+	const billsPromise = getBillByUserID(user_id);
+	const paymentsPromise = getPaymentByUserID(user_id);
+	const [bills, payments] = await Promise.all([billsPromise, paymentsPromise]);
 	return {
-		yourAmount: bills,
-		otherAmount: payments,
+		owned: bills,
+		earned: payments,
 	};
 }

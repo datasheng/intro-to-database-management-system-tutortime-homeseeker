@@ -50,20 +50,19 @@ const Account: NextPage = () => {
 				const appointmentsData = await getUserAppointments(Number(user?.id));
 				const transactionsData = await getPayeePayments(Number(user?.id));
 				const paymentsData = await getRecipientPayments(Number(user?.id));
-				//const amounts = await getAmount(Number(user?.id));
-				console.log(amount);
+				const amounts = await getAmount(Number(user?.id));
 				setProperties(propertiesData);
 				setPropertyAppointments(propertyAppointmentsData);
 				setAppointments(appointmentsData);
 				setTransactions(transactionsData);
 				setPayments(paymentsData);
-				//setAmount(amounts);
+				setAmount(amounts);
 			} catch (error) {
 				console.log(error);
 			}
 		};
 		fetchDetails();
-	}, [user, amount]);
+	}, [user]);
 
 	return (
 		<div>
@@ -75,7 +74,6 @@ const Account: NextPage = () => {
 						</h1>
 						<Card className="mx-auto mt-5 mb-5 h-96 overflow-y-auto">
 							<>
-								<h2>Your id: {user.id}</h2>
 								<h2>Your email: {user.email}</h2>
 								{user.is_admin ? (
 									<div>
@@ -96,8 +94,7 @@ const Account: NextPage = () => {
 											) : (
 												<p>You have no pending fees.</p>
 											)}
-											<p>Total you owe: {amount.owned}</p>
-
+											<p>Total bill: ${amount.owned}</p>
 											{payments && payments.length > 0 ? (
 												<div>
 													<h2>Your Anticipated Payments:</h2>
@@ -108,13 +105,12 @@ const Account: NextPage = () => {
 											) : (
 												<p>You have no upcoming payments.</p>
 											)}
-											<p>Total you earned: {amount.earned}</p>
+											<p>Total payments: ${amount.earned}</p>
 										</div>
 									</div>
 								)}
 							</>
 						</Card>
-
 						<Card className="mx-auto h-96 overflow-y-auto">
 							{properties && properties.length > 0 ? (
 								<div className="flex flex-col items-center justify-center">

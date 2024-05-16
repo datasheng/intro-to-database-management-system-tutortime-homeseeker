@@ -108,7 +108,7 @@ export async function getBillByUserID(id: number): Promise<number> {
 		return 0;
 	}
 
-	return res[0].amount;
+	return res[0].amount || 0;
 }
 
 /**
@@ -124,5 +124,5 @@ export async function getPaymentByUserID(id: number): Promise<number> {
 		return 0;
 	}
 
-	return res[0].amount;
+	return res[0].amount || 0;
 }
