@@ -12,7 +12,7 @@ interface EditPropertyFormProps {
 
 export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 	property,
-	onSubmit
+	onSubmit,
 }) => {
 	const [editMode, setEditMode] = useState(false);
 	const [input, setInput] = useState({

@@ -3,8 +3,8 @@
 import { getCurrentUser } from "@/app/cookies";
 import { User } from "@/db/auth";
 import {
-	getUpcomingAppointmentsByUser,
 	getUpcomingAppointmentsByBroker,
+	getUpcomingAppointmentsByUser,
 } from "@/db/homeseeker/appointment";
 import { getPropertiesByUser } from "@/db/homeseeker/property";
 import {
@@ -43,6 +43,6 @@ export async function getAmount(user_id: number) {
 	const payments = getPaymentByUserID(user_id);
 	return {
 		yourAmount: bills,
-		otherAmount: payments
-	}
+		otherAmount: payments,
+	};
 }

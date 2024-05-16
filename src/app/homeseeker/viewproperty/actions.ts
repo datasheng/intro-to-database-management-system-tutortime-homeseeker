@@ -39,7 +39,10 @@ export async function updatePropertyDetails(
 		if (!address) {
 			return "Address is required";
 		}
-		if (!type?.toLocaleLowerCase()?.includes("sale") && !type?.toLocaleLowerCase().includes("rent")) {
+		if (
+			!type?.toLocaleLowerCase()?.includes("sale") &&
+			!type?.toLocaleLowerCase().includes("rent")
+		) {
 			return "Type must include for sale or for rent.";
 		}
 		if (rooms && rooms < 1) {

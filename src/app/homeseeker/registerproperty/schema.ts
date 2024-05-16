@@ -10,7 +10,8 @@ export const newPropertySchema = z.object({
 			message: "Invalid zipcode",
 			path: ["zipcode"],
 		}),
-	type: z.string()
+	type: z
+		.string()
 		.min(1, "Required")
 		.refine((value) => /(rent|sale)/i.test(value), {
 			message: "Must include 'rent' or 'sale'",

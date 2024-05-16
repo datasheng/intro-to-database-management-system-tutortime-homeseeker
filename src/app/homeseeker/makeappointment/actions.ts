@@ -1,6 +1,7 @@
 "use server";
 
 import { getCurrentUser } from "@/app/cookies";
+import { getUserByScheduleID } from "@/db/auth";
 import {
 	Appointment,
 	createAppointment,
@@ -10,7 +11,6 @@ import {
 import { getPropertyBySchedule } from "@/db/homeseeker/property";
 import { getScheduleByID } from "@/db/homeseeker/schedule";
 import { createTransaction } from "@/db/transaction";
-import { getUserByScheduleID } from "@/db/auth";
 
 export async function makeAppointment(
 	schedule_id: number,
@@ -96,8 +96,8 @@ export async function makeAppointment(
 		user.id as number,
 		owner.id as number,
 		amount as number,
-		`${user.first_name} ${user.last_name} owes $${amount} to ${owner.first_name} ${owner.last_name}` as string
-	)
+		`${user.first_name} ${user.last_name} owes $${amount} to ${owner.first_name} ${owner.last_name}` as string,
+	);
 	if (!transaction_id) {
 		return "Failed creating transaction.";
 	}
@@ -107,8 +107,8 @@ export async function makeAppointment(
 		user.id as number,
 		owner.id as number,
 		amount as number,
-		`${user.first_name} ${user.last_name} owes $${amount} to ${owner.first_name} ${owner.last_name}` as string
-	)
+		`${user.first_name} ${user.last_name} owes $${amount} to ${owner.first_name} ${owner.last_name}` as string,
+	);
 	if (!fee_id) {
 		return "Failed assigning fees.";
 	}

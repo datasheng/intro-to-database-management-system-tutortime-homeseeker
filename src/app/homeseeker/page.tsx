@@ -26,7 +26,9 @@ const Home: NextPage = async () => {
 	return (
 		<div className="container mx-auto py-20">
 			<h1 className="mb-5 text-tremor-metric font-medium">Properties</h1>
-			<Link href={"/homeseeker/registerproperty"}>Register your property here!</Link>
+			<Link href={"/homeseeker/registerproperty"}>
+				Register your property here!
+			</Link>
 			<div className="grid grid-cols-2 gap-5">
 				{properties.map((property) => (
 					<Card key={property.id}>
