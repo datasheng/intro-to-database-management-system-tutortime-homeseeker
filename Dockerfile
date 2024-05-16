@@ -3,9 +3,6 @@ FROM node:lts-alpine AS base
 
 WORKDIR /app
 
-COPY package.json package-lock.json /app/
-RUN npm install
-
 
 # Run web application in development env
 FROM base AS dev
