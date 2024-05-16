@@ -105,9 +105,9 @@ export async function makeAppointment(
 	// Create a fee for the user
 	const fee_id = await createTransaction(
 		user.id as number,
-		owner.id as number,
+		1,
 		amount as number,
-		`${user.first_name} ${user.last_name} owes $${amount} to ${owner.first_name} ${owner.last_name}` as string,
+		`$${amount} is charged as a fee for appointment with ${owner.first_name} ${owner.last_name}.` as string,
 	);
 	if (!fee_id) {
 		return "Failed assigning fees.";

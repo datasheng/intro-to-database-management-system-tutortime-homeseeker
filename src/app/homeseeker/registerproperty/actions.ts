@@ -51,7 +51,6 @@ export async function registerProperty(
 	if (!property_id) {
 		return { formError: "Failed to register property" };
 	}
-
 	// Get the property so it can be returned
 	const property = await getPropertyByID(property_id);
 	if (!property) {

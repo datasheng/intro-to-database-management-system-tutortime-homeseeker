@@ -87,7 +87,7 @@ export async function createUser(
 	try {
 		const [res] = await pool.execute<ResultSetHeader>(
 			`INSERT INTO user (first_name, last_name, email, password_hash, is_admin)
-            VALUES (:first_name, :last_name, :email, :hash, 1)`,
+            VALUES (:first_name, :last_name, :email, :hash, 0)`,
 			{ first_name, last_name, email, hash },
 		);
 

@@ -8,8 +8,6 @@ INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
 VALUES (3, 'Tyler', 'Ortiz', 'tortiz003@citymail.cuny.edu', '', 1);
 INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
 VALUES (4, 'James', 'Zou', 'zoujames97@gmail.com', '', 1);
-INSERT INTO user (id, first_name, last_name, email, password_hash, is_admin)
-VALUES (5, 'Kevin', 'Zheng', 'kevinzheng700@gmail.com', '', 1);
 
 INSERT INTO tt_service (id, name, admin_id, timezone, duration, active, description)
 VALUES (1, 'CS/Math Tutoring', 1, 'America/New_York', 60, true, 'Get help for any MATH or CSC course!');

@@ -4,6 +4,7 @@ import Link from "next/link";
 import type React from "react";
 
 import { getCurrentUser } from "@/app/cookies";
+import { HomeSeekerDropdown } from "./HomeSeekerDropdown";
 import { SignOutButton } from "./SignOutButton";
 import { TutorTimeDropdown } from "./TutorTimeDropdown";
 
@@ -21,11 +22,7 @@ export const Navbar: React.FC = async () => {
 					</Link>
 				</li>
 				<li>
-					<Link href="/homeseeker">
-						<span className="font-semibold text-2xl text-center text-blue-900">
-							Homeseeker
-						</span>
-					</Link>
+					<HomeSeekerDropdown />
 				</li>
 				<li>
 					<TutorTimeDropdown />
