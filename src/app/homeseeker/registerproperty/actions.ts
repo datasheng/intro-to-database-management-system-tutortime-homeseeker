@@ -1,12 +1,12 @@
 "use server";
 
-import { getCurrentUser } from "@/app/cookies";
 import {
 	Property,
 	createProperty,
 	getPropertyByAddress,
 	getPropertyByID,
 } from "@/db/homeseeker/property";
+import { getCurrentUser } from "@/utils/cookies";
 import { FormStatus, validateFormData } from "@/utils/forms";
 
 import { newPropertySchema } from "./schema";

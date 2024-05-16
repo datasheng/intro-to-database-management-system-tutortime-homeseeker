@@ -1,7 +1,7 @@
 "use server";
 
-import { getCurrentUser } from "@/app/cookies";
 import { insertAppointment } from "@/db/tutortime/appointment";
+import { getCurrentUser } from "@/utils/cookies";
 import { timeToHoursMinutes } from "@/utils/datetime";
 import {
 	setDay,

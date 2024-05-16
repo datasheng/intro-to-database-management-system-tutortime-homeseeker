@@ -45,6 +45,29 @@ export async function getServices(): Promise<Service[]> {
 }
 
 /**
+ * Retrieve all active services from database by admin id.
+ */
+export async function getUserServices(admin_id: number): Promise<Service[]> {
+	const [res] = await pool.execute<Service[]>(
+		`SELECT
+            s.id AS id,
+            s.name AS name,
+            CONCAT(u.first_name, ' ', u.last_name) AS admin,
+            s.timezone AS timezone,
+            s.duration AS duration,
+            s.description AS description
+        FROM tt_service AS s
+        JOIN user AS u
+            ON s.admin_id = u.id
+        WHERE s.active = true
+            AND s.admin_id = :admin_id`,
+		{ admin_id },
+	);
+
+	return res;
+}
+
+/**
  * Retrieve service from database by id.
  */
 export async function getService(service_id: number): Promise<Service | null> {
@@ -106,11 +129,4 @@ export async function createService(
 	);
 
 	return res.insertId;
-}
-
-/**
- * Deletes service with given id.
- */
-export async function deleteService(id: number): Promise<void> {
-	await pool.execute("DELETE FROM service WHERE id = :id", { id });
 }

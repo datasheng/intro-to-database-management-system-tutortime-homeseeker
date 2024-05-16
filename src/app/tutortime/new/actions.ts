@@ -2,8 +2,8 @@
 
 import { FormStatus, validateFormData } from "@/utils/forms";
 
-import { getCurrentUser } from "@/app/cookies";
 import { createService } from "@/db/tutortime/service";
+import { getCurrentUser } from "@/utils/cookies";
 import { serviceSchema } from "./schema";
 
 export type State = FormStatus<number>;

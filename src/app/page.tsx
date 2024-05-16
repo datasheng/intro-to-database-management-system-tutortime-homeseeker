@@ -1,6 +1,7 @@
 "use server";
+
 import { getAllTransactions } from "@/db/transaction";
-import { getCurrentUser } from "./cookies";
+import { getCurrentUser } from "@/utils/cookies";
 
 export default async function Home() {
 	const user = getCurrentUser();

@@ -1,6 +1,5 @@
 "use server";
 
-import { getCurrentUser } from "@/app/cookies";
 import { getUserByScheduleID } from "@/db/auth";
 import {
 	Appointment,
@@ -10,6 +9,7 @@ import {
 } from "@/db/homeseeker/appointment";
 import { getScheduleByID } from "@/db/homeseeker/schedule";
 import { createTransaction } from "@/db/transaction";
+import { getCurrentUser } from "@/utils/cookies";
 
 export async function makeAppointment(
 	schedule_id: number,

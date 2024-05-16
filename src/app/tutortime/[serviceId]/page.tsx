@@ -4,9 +4,9 @@ import { Card, List, ListItem } from "@tremor/react";
 import { NextPage } from "next";
 import { notFound } from "next/navigation";
 
-import { getCurrentUser } from "@/app/cookies";
 import { getIntervals, getSchedule } from "@/db/tutortime/schedule";
 import { getService } from "@/db/tutortime/service";
+import { getCurrentUser } from "@/utils/cookies";
 import { WEEKDAYS, WEEKDAY_NAMES } from "@/utils/datetime";
 import Link from "next/link";
 import React from "react";

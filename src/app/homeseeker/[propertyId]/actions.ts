@@ -1,6 +1,5 @@
 "use server";
 
-import { getCurrentUser } from "@/app/cookies";
 import {
 	Property,
 	deleteProperty,
@@ -13,6 +12,7 @@ import {
 	getScheduleByID,
 	getSchedulesByPropertyID,
 } from "@/db/homeseeker/schedule";
+import { getCurrentUser } from "@/utils/cookies";
 
 export async function deletePropertyById(id: number): Promise<boolean> {
 	try {

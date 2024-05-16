@@ -3,7 +3,7 @@
 import Link from "next/link";
 import type React from "react";
 
-import { getCurrentUser } from "@/app/cookies";
+import { getCurrentUser } from "@/utils/cookies";
 import { HomeSeekerDropdown } from "./HomeSeekerDropdown";
 import { SignOutButton } from "./SignOutButton";
 import { TutorTimeDropdown } from "./TutorTimeDropdown";

@@ -5,10 +5,10 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { getCurrentUser } from "@/app/cookies";
 import { getAppointmentsBySchedule } from "@/db/homeseeker/appointment";
 import { getPropertyByID } from "@/db/homeseeker/property";
 import { getScheduleByID } from "@/db/homeseeker/schedule";
+import { getCurrentUser } from "@/utils/cookies";
 import { AppointmentForm } from "./AppointmentForm";
 
 interface Params {

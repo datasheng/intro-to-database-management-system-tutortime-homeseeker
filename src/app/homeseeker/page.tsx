@@ -4,8 +4,8 @@ import { Button, Card } from "@tremor/react";
 import { NextPage } from "next";
 import Link from "next/link";
 
-import { getCurrentUser } from "@/app/cookies";
 import { getProperties } from "@/db/homeseeker/property";
+import { getCurrentUser } from "@/utils/cookies";
 
 async function filterPropertiesByUser() {
 	const properties = await getProperties();

@@ -5,9 +5,9 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { getCurrentUser } from "@/app/cookies";
 import { getPropertyByID } from "@/db/homeseeker/property";
 import { getSchedulesByPropertyID } from "@/db/homeseeker/schedule";
+import { getCurrentUser } from "@/utils/cookies";
 import { EditPropertyForm } from "./EditPropertyForm";
 import { ScheduleForm } from "./ScheduleForm";
 

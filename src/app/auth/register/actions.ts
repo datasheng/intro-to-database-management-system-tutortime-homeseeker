@@ -2,8 +2,8 @@
 
 import { cookies } from "next/headers";
 
-import { encryptCookie } from "@/app/cookies";
 import { type User, createUser } from "@/db/auth";
+import { encryptCookie } from "@/utils/cookies";
 import { type FormStatus, validateFormData } from "@/utils/forms";
 
 import { registerSchema } from "./schema";

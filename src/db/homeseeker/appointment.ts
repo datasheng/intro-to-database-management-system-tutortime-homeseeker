@@ -1,6 +1,6 @@
 import type { ResultSetHeader, RowDataPacket } from "mysql2";
 
-import { pool } from "@/db/index";
+import { pool } from "@/db";
 
 export interface Appointment extends RowDataPacket {
 	id: number;
