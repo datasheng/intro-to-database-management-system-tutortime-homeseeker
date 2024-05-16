@@ -15,7 +15,7 @@ export const Navbar: React.FC = async () => {
 		<nav className="bg-white border-b-4 border-black">
 			<ul className="flex flex-row justify-between items-center p-4">
 				<li>
-					<Link href="/public">
+					<Link href="/">
 						<span className="font-semibold text-2xl text-center text-blue-900">
 							Home
 						</span>

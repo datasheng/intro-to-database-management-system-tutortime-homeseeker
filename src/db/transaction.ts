@@ -6,10 +6,11 @@ import type {
 
 import { pool } from "@/db/index";
 
+
 export interface Transaction extends RowDataPacket {
 	id: number;
 	payee_id: number;
-	recipent_id: number;
+	recipient_id: number;
 	amount: number;
 	description?: string;
 }
@@ -125,4 +126,24 @@ export async function getPaymentByUserID(id: number): Promise<number> {
 	}
 
 	return res[0].amount || 0;
+}
+
+export async function getAllTransactions(): Promise<Transaction[]>{
+
+    const [res] = await pool.execute<Transaction[]>(
+        // "select * from transaction",
+        `SELECT 
+            t.id,           
+            CONCAT(u1.first_name, ' ', u1.last_name) AS payee,    
+            CONCAT(u2.first_name, ' ', u2.last_name) AS recipient,
+            amount,        
+            description
+        FROM transaction AS t
+            JOIN user AS u1
+                ON t.payee_id = u1.id
+            JOIN user AS u2
+                ON t.recipient_id = u2.id`,
+    );
+
+    return res
 }

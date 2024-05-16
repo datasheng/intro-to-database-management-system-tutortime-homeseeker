@@ -22,7 +22,7 @@ export interface UserWithHash extends RowDataPacket {
 	last_name: string;
 	email: string;
 	password_hash: string;
-	is_admin: number;
+	is_admin: boolean;
 }
 
 export type User = Pick<
@@ -46,7 +46,7 @@ export async function getUser(
             last_name,
             email,
             password_hash,
-			is_admin
+						is_admin
         FROM user
         WHERE user.email = :email`,
 		{ email },
