@@ -3,13 +3,22 @@
 import { Button, Card, TextInput } from "@tremor/react";
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 
-import { type State, authenticate } from "@/app/auth/sign-in/actions";
-import { redirect } from "next/navigation";
+import { type State, authenticate } from "./actions";
 
 const SignIn: NextPage = () => {
+	const router = useRouter();
+
 	const [state, formAction] = useFormState<State, FormData>(authenticate, {});
+
+	useEffect(() => {
+		if (state.data) {
+			router.push("/user");
+		}
+	}, [router, state]);
 
 	return (
 		<div className="container mx-auto py-20">
@@ -52,7 +61,6 @@ const SignIn: NextPage = () => {
 					</div>
 				</form>
 			</Card>
-			{state.data && redirect("/user")}
 		</div>
 	);
 };

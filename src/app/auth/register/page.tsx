@@ -3,12 +3,22 @@
 import { Button, Card, TextInput } from "@tremor/react";
 import { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useFormState } from "react-dom";
 
-import { State, register } from "@/app/auth/register/actions";
+import { State, register } from "./actions";
 
 const Register: NextPage = () => {
+	const router = useRouter();
+
 	const [state, formAction] = useFormState<State, FormData>(register, {});
+
+	useEffect(() => {
+		if (state.data) {
+			router.push("/user");
+		}
+	}, [router, state]);
 
 	return (
 		<div className="container mx-auto py-20">
