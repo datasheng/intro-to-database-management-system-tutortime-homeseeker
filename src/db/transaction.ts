@@ -85,30 +85,39 @@ export async function deleteTransaction(id: number): Promise<void> {
     await pool.execute("DELETE FROM transaction WHERE id = :id", {
         id,
     });
+
+interface Amount extends RowDataPacket {
+	amount: number;
 }
 
 /**
  * Retrieves total transactions amount made by a user.
  */
-export async function GetBillByUserID(
-    id: number,
-): Promise<number> {
-    const [res] = await pool.execute(
-        'CALL GetBillByUser(?)',
-        [id], // Pass parameters as an array
-    );
-    return res;
+export async function getBillByUserID(id: number): Promise<number> {
+	const [[res, _]] = await pool.execute<ProcedureCallPacket<Amount[]>>(
+		"CALL GetBillByUser(:id)",
+		{ id },
+	);
+
+	if (res.length !== 1) {
+		return 0;
+	}
+
+	return res[0].amount;
 }
 
 /**
  * Retrieves total transactions amount to by a user.
  */
-export async function GetPaymentByUserID(
-    id: number,
-): Promise<number> {
-    const [res] = await pool.execute(
-        'CALL GetPaymentByUser(?)',
-        [id],
-    );
-    return res;
+export async function getPaymentByUserID(id: number): Promise<number> {
+	const [[res, _]] = await pool.execute<ProcedureCallPacket<Amount[]>>(
+		"CALL GetPaymentByUser(:id)",
+		{ id },
+	);
+
+	if (res.length !== 1) {
+		return 0;
+	}
+
+	return res[0].amount;
 }
