@@ -7,7 +7,12 @@ import {
 	getUpcomingAppointmentsByBroker,
 } from "@/db/homeseeker/appointment";
 import { getPropertiesByUser } from "@/db/homeseeker/property";
-import { getTransactionsByPayee, getTransactionsByRecipient, GetBillByUserID, GetPaymentByUserID } from "@/db/transaction";
+import {
+	getBillByUserID,
+	getPaymentByUserID,
+	getTransactionsByPayee,
+	getTransactionsByRecipient,
+} from "@/db/transaction";
 
 export async function getUserProperties(user_id: number) {
 	return await getPropertiesByUser(user_id);
@@ -34,8 +39,8 @@ export async function getRecipientPayments(user_id: number) {
 }
 
 export async function getAmount(user_id: number) {
-	const bills = GetBillByUserID(user_id);
-	const payments = GetPaymentByUserID(user_id);
+	const bills = getBillByUserID(user_id);
+	const payments = getPaymentByUserID(user_id);
 	return {
 		yourAmount: bills,
 		otherAmount: payments
