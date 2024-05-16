@@ -10,23 +10,29 @@ import {
 import {
 	Schedule,
 	createSchedule,
+	deleteSchedule,
 	getScheduleByID,
 	getSchedulesByPropertyID,
 } from "@/db/homeseeker/schedule";
 
 export async function deletePropertyById(id: number): Promise<boolean> {
 	try {
+		const schedules = await getSchedulesByPropertyID(id);
+		for (const schedule of schedules) {
+			await deleteSchedule(schedule.id);
+		}
+
 		await deleteProperty(id);
 		return true;
 	} catch (error) {
-		console.error("Failed to delete property:", error);
+		console.error("Failed to delete property and schedules:", error);
 		return false;
 	}
 }
 
 export async function updatePropertyDetails(
 	id: number,
-	updatedDetails: Partial<Property>,
+	updatedDetails: Partial<Omit<Property, "constructor">>,
 ): Promise<boolean | string> {
 	try {
 		const address = updatedDetails.address;

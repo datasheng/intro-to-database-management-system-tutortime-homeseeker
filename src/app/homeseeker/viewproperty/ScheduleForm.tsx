@@ -53,7 +53,7 @@ export const ScheduleForm: React.FC<ScheduleFormProps> = ({
 	};
 
 	return (
-		<div className="container mx-auto py-20">
+		<div className="container mx-auto py-5">
 			{property_id ? (
 				<div>
 					<Card className="max-w-96 text-center">
