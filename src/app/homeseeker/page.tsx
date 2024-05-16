@@ -32,27 +32,27 @@ const Home: NextPage = async () => {
 			<div className="grid grid-cols-2 gap-5">
 				{properties.map((property) => (
 					<Card key={property.id}>
-						<div className="mb-3 flex flex-row items-center">
+						<div className="mb-3 flex items-center">
 							<div>
 								<h2 className="text-tremor-title font-medium">
-									{property.address}
+									{property.address}, {property.zipcode}
 								</h2>
-								<p className="text-slate-600 text-sm">
-									Offered by {property.zipcode}
+								<p className="text-slate-600 text-med">
+									Priced at ${property.price?.toLocaleString()}
+								</p>
+								<p className="text-slate-600 text-med">
+									Property Type: {property.type}
 								</p>
 							</div>
-							<div className="ml-auto">
-								<Button>
-									<Link
-										href={`/homeseeker/viewproperty/?id=${property.id}`}
-										className="text-white visited:text-white"
-									>
-										Book Now
-									</Link>
-								</Button>
-							</div>
+							<Button className="ml-auto">
+								<Link
+									href={`/homeseeker/viewproperty/?id=${property.id}`}
+									className="text-white visited:text-white"
+								>
+									Book Now
+								</Link>
+							</Button>
 						</div>
-						<p>{property.type}</p>
 					</Card>
 				))}
 			</div>

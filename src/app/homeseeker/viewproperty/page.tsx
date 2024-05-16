@@ -38,57 +38,76 @@ const ViewProperty: NextPage = () => {
 	};
 
 	return (
-		<div className="container">
-			<div className="flex flex-col items-center justify-center w-1/2 pr-4">
-				{property ? (
-					<div className="flex flex-row">
-						<Card className="mt-5 flex flex-row gap-3 justify-center">
-							<p>Properties details:</p>
-							<p>Address: {property.address}</p>
-							<p>Zipcode: {property.zipcode}</p>
-							<p>Type: {property.type}</p>
-							<p>Asking price: {property.price}</p>
-							<p>Area: {property.area}</p>
-							<p>Rooms: {property.rooms}</p>
-							<p>Year built: {property.built}</p>
-						</Card>
-						<div className="flex flex-col gap-5">
-							{schedules ? (
-								schedules.map((schedule) => (
-									<Card key={schedule.id}>
-										<div className="mb-3 flex flex-col items-center">
-											<p className="text-slate-600 text-sm">
-												Start time: {new Date(schedule.start).toLocaleString()}
-											</p>
-											<p className="text-slate-600 text-sm">
-												End time: {new Date(schedule.end).toLocaleString()}
-											</p>
-											<Link
-												href={{
-													pathname: "/homeseeker/makeappointment",
-													query: { schedule: schedule.id },
-												}}
-											>
-												<Button className="ml-auto">
-													Make an appointment!
-												</Button>
-											</Link>
-										</div>
-									</Card>
-								))
-							) : (
-								<p>No schedules found yet.</p>
+		<div className="container mx-auto px-4">
+			<div className="flex flex-row justify-between items-start space-x-4">
+				<div className="w-3/4">
+					{property && (
+						<>
+							<Card className="mt-5 p-5 bg-white rounded-lg">
+								<div className="grid grid-cols-2 gap-4 text-lg">
+									<p>
+										<strong>Address:</strong> {property.address}
+									</p>
+									<p>
+										<strong>Zipcode:</strong> {property.zipcode}
+									</p>
+									<p>
+										<strong>Type:</strong> {property.type}
+									</p>
+									<p>
+										<strong>Asking price:</strong> $
+										{property.price?.toLocaleString()}
+									</p>
+									<p>
+										<strong>Area:</strong> {property.area} sq ft
+									</p>
+									<p>
+										<strong>Rooms:</strong> {property.rooms}
+									</p>
+									<p>
+										<strong>Year built:</strong> {property.built}
+									</p>
+								</div>
+							</Card>
+
+							{user && user.id === property?.broker_id && (
+								<div>
+									<EditPropertyForm
+										property={property}
+										onSubmit={handleRefresh}
+									/>
+									<ScheduleForm
+										property_id={property_id}
+										onSubmit={handleRefresh}
+									/>
+								</div>
 							)}
-						</div>
-					</div>
-				) : null}
+						</>
+					)}
+				</div>
+				<div className="w-1/4">
+					{schedules?.map((schedule) => (
+						<Card key={schedule.id} className="mt-5">
+							<div className="flex flex-col items-center">
+								<p className="text-slate-600 text-sm">
+									Start time: {new Date(schedule.start).toLocaleString()}
+								</p>
+								<p className="text-slate-600 text-sm">
+									End time: {new Date(schedule.end).toLocaleString()}
+								</p>
+								<Link
+									href={{
+										pathname: "/homeseeker/makeappointment",
+										query: { schedule: schedule.id },
+									}}
+								>
+									<Button className="ml-auto">Make an appointment!</Button>
+								</Link>
+							</div>
+						</Card>
+					))}
+				</div>
 			</div>
-			{user && user.id === property?.broker_id && (
-				<EditPropertyForm property={property} onSubmit={handleRefresh} />
-			)}
-			{user && user.id === property?.broker_id && (
-				<ScheduleForm property_id={property_id} onSubmit={handleRefresh} />
-			)}
 		</div>
 	);
 };

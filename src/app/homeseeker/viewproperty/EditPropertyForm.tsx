@@ -16,14 +16,14 @@ export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 }) => {
 	const [editMode, setEditMode] = useState(false);
 	const [input, setInput] = useState({
-		address: property.address,
-		zipcode: property.zipcode,
-		type: property.type,
-		rooms: property.rooms,
-		area: property.area,
-		price: property.price,
-		built: property.built,
-	} as Partial<Property>);
+		address: property.address ?? "",
+		zipcode: property.zipcode ?? "",
+		type: property.type ?? "",
+		rooms: property.rooms ?? "",
+		area: property.area ?? "",
+		price: property.price ?? "",
+		built: property.built ?? "",
+	});
 	const [error, setError] = useState<string | null>(null);
 
 	const handleDelete = async () => {
@@ -48,15 +48,11 @@ export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 		e.preventDefault();
 		const response = await updatePropertyDetails(property.id, input);
 		if (response) {
-			if (typeof response === "string") {
-				setError(response);
-			} else {
-				setError(null);
-				setEditMode(false);
-				onSubmit();
-			}
+			setError(null);
+			setEditMode(false);
+			onSubmit();
 		} else {
-			console.log(response);
+			setError("Failed to update the property");
 		}
 	};
 
@@ -66,80 +62,93 @@ export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 	};
 
 	return (
-		<div className="container">
-			<div className="flex flex-col gap-5 items-center justify-center">
-				{editMode && (
-					<Card className="mt-5 p-4">
+		<div className="container mx-auto py-5">
+			<Card className="max-w-96 p-4 bg-white rounded-lg shadow">
+				{editMode ? (
+					<form onSubmit={handleSave}>
 						<h2 className="text-lg font-semibold mb-2">Edit Property</h2>
-						<form onSubmit={handleSave}>
-							<TextInput
-								name="address"
-								value={input.address}
-								onChange={handleChange}
-								placeholder="Address"
-								required
-							/>
-							<TextInput
-								name="type"
-								value={input.type}
-								onChange={handleChange}
-								placeholder="Type"
-								required
-							/>
-							<NumberInput
-								name="zipcode"
-								value={input.zipcode}
-								onChange={handleChange}
-								placeholder="Zipcode"
-								required
-							/>
-							<NumberInput
-								name="rooms"
-								value={input.rooms}
-								onChange={handleChange}
-								placeholder="Rooms"
-								required
-							/>
-							<NumberInput
-								name="area"
-								value={input.area}
-								onChange={handleChange}
-								placeholder="Area"
-								required
-							/>
-							<NumberInput
-								name="price"
-								value={input.price}
-								onChange={handleChange}
-								placeholder="Price"
-								required
-							/>
-							<NumberInput
-								name="built"
-								value={input.built}
-								onChange={handleChange}
-								placeholder="Year Built"
-								required
-							/>
-							<div className="h-4">
-								{error && (
-									<small className="text-sm text-red-500">{error}</small>
-								)}
-							</div>
-							<div className="flex flex-row mt-4">
-								<Button type="submit">Save</Button>
-								<Button onClick={handleCancel} className="bg-red-500">
-									Cancel
-								</Button>
-							</div>
-						</form>
-					</Card>
+						<TextInput
+							name="address"
+							value={input.address}
+							onChange={handleChange}
+							placeholder="Address"
+							required
+						/>
+						<TextInput
+							name="zipcode"
+							value={input.zipcode.toString()}
+							onChange={handleChange}
+							placeholder="Zipcode"
+							required
+						/>
+						<TextInput
+							name="type"
+							value={input.type}
+							onChange={handleChange}
+							placeholder="Type"
+							required
+						/>
+						<NumberInput
+							name="rooms"
+							value={input.rooms}
+							onChange={handleChange}
+							placeholder="Rooms"
+							required
+						/>
+						<TextInput
+							name="area"
+							value={input.area.toString()}
+							onChange={handleChange}
+							placeholder="Area"
+							required
+						/>
+						<TextInput
+							name="price"
+							value={input.price.toString()}
+							onChange={handleChange}
+							placeholder="Price"
+							required
+						/>
+						<TextInput
+							name="built"
+							value={input.built.toString()}
+							onChange={handleChange}
+							placeholder="Year Built"
+							required
+						/>
+						{error && <div className="text-sm text-red-500">{error}</div>}
+						<div className="flex space-x-4 mt-4">
+							<Button
+								type="submit"
+								className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+							>
+								Save
+							</Button>
+							<Button
+								onClick={handleCancel}
+								className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+							>
+								Cancel
+							</Button>
+						</div>
+					</form>
+				) : (
+					<div className="text-center">
+						<Button
+							onClick={handleEdit}
+							className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+						>
+							Edit
+						</Button>
+						<Button
+							onClick={handleDelete}
+							className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-4"
+						>
+							Delete
+						</Button>
+					</div>
 				)}
-				{!editMode && <Button onClick={handleEdit}>Edit</Button>}
-				<Button onClick={handleDelete} className="bg-red-500">
-					Delete
-				</Button>
-			</div>
+			</Card>
 		</div>
 	);
 };
