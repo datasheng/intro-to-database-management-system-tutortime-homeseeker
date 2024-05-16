@@ -2,19 +2,19 @@
 
 import { Button, Card } from "@tremor/react";
 import { DatePicker, DatePickerValue } from "@tremor/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
+import { Property } from "@/db/homeseeker/property";
 import { makeSchedule } from "./actions";
 
 interface ScheduleFormProps {
-	property_id: number;
-	onSubmit: () => void;
+	property: Property;
 }
 
-export const ScheduleForm: React.FC<ScheduleFormProps> = ({
-	property_id,
-	onSubmit,
-}) => {
+export const ScheduleForm: React.FC<ScheduleFormProps> = ({ property }) => {
+	const router = useRouter();
+
 	const [input, setInput] = useState({
 		start: "",
 		end: "",
@@ -40,7 +40,7 @@ export const ScheduleForm: React.FC<ScheduleFormProps> = ({
 		const startDateTime = `${date?.toISOString().split("T")[0]}T${input.start}`;
 		const endDateTime = `${date?.toISOString().split("T")[0]}T${input.end}`;
 		const output = await makeSchedule(
-			property_id,
+			property.id,
 			new Date(startDateTime),
 			new Date(endDateTime),
 		);
@@ -48,13 +48,13 @@ export const ScheduleForm: React.FC<ScheduleFormProps> = ({
 			setError(output);
 		} else {
 			setError(null);
-			onSubmit();
+			router.refresh();
 		}
 	};
 
 	return (
 		<div className="container mx-auto py-5">
-			{property_id ? (
+			{property ? (
 				<div>
 					<Card className="max-w-96 text-center">
 						<h2>Upload your availability</h2>

@@ -122,7 +122,7 @@ const Account: NextPage = () => {
 											<li key={property.id}>
 												<Card className="p-5 w-100 mb-5">
 													<Link
-														href={`/homeseeker/viewproperty?id=${property.id}`}
+														href={`/homeseeker/${property.id}`}
 														className="text-black visited:text-black"
 													>
 														<div className="mb-3 flex flex-row items-center gap-10">
@@ -163,7 +163,7 @@ const Account: NextPage = () => {
 											<li key={appointment.id}>
 												<Card className="p-5 w-100 mb-5">
 													<Link
-														href={`/homeseeker/viewproperty/?id=${appointment.id}`}
+														href={`/homeseeker/${appointment.id}`}
 														className="text-black visited:text-black"
 													>
 														<div className="mb-3 flex flex-row items-center gap-10">
@@ -210,7 +210,7 @@ const Account: NextPage = () => {
 										<li key={appointment.id}>
 											<Card className="p-5 mb-5">
 												<Link
-													href={`/homeseeker//viewproperty/?id=${appointment.id}`}
+													href={`/homeseeker/${appointment.id}`}
 													className="text-black visited:text-black"
 												>
 													<div className="mb-3 flex flex-row items-center gap-10">

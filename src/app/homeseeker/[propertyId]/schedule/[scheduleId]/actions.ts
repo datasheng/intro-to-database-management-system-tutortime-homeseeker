@@ -8,7 +8,6 @@ import {
 	getAppointmentByID,
 	getAppointmentsBySchedule,
 } from "@/db/homeseeker/appointment";
-import { getPropertyBySchedule } from "@/db/homeseeker/property";
 import { getScheduleByID } from "@/db/homeseeker/schedule";
 import { createTransaction } from "@/db/transaction";
 
@@ -119,19 +118,4 @@ export async function makeAppointment(
 		return "Failed to retrieve appointment.";
 	}
 	return appointment;
-}
-
-export async function fetchScheduleData(schedule_id: number) {
-	const scheduleData = await getScheduleByID(schedule_id);
-	return scheduleData;
-}
-
-export async function fetchAppointments(schedule_id: number) {
-	const appointmentData = await getAppointmentsBySchedule(schedule_id);
-	return appointmentData;
-}
-
-export async function fetchPropertyBySchedule(schedule_id: number) {
-	const propertyData = await getPropertyBySchedule(schedule_id);
-	return propertyData;
 }

@@ -1,38 +1,26 @@
 "use client";
 
 import { Button, Card } from "@tremor/react";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 import { Schedule } from "@/db/homeseeker/schedule";
-import { fetchScheduleData, makeAppointment } from "./actions";
+import { makeAppointment } from "./actions";
 
 interface AppointmentFormProps {
-	schedule_id: number;
+	schedule: Schedule;
 }
 
 export const AppointmentForm: React.FC<AppointmentFormProps> = ({
-	schedule_id,
+	schedule,
 }) => {
-	const [schedule, setScheule] = useState<Schedule | null>(null);
+	const router = useRouter();
+
 	const [input, setInput] = useState({
 		start: "",
 		end: "",
 	});
 	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		const fetchSchedule = async () => {
-			try {
-				if (schedule_id) {
-					const data = await fetchScheduleData(schedule_id);
-					setScheule(data);
-				}
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		fetchSchedule();
-	}, [schedule_id]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -43,7 +31,7 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
 		e.preventDefault();
 		if (schedule) {
 			const output = await makeAppointment(
-				schedule_id,
+				schedule.id,
 				new Date(
 					`${schedule.start.toISOString().split("T")[0]}T${input.start}`,
 				),
@@ -53,7 +41,7 @@ export const AppointmentForm: React.FC<AppointmentFormProps> = ({
 				setError(output);
 			} else {
 				setError(null);
-				window.location.reload();
+				router.refresh();
 			}
 		}
 	};

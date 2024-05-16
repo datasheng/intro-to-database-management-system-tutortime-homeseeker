@@ -4,7 +4,6 @@ import { getCurrentUser } from "@/app/cookies";
 import {
 	Property,
 	deleteProperty,
-	getPropertyByID,
 	updateProperty,
 } from "@/db/homeseeker/property";
 import {
@@ -161,13 +160,4 @@ export async function makeSchedule(
 		return "Failed to retrieve schedule.";
 	}
 	return schedule;
-}
-
-export async function fetchPropertyData(property_id: number) {
-	const propertyData = await getPropertyByID(property_id);
-	return propertyData;
-}
-
-export async function fetchSchedules(property_id: number) {
-	return getSchedulesByPropertyID(property_id);
 }

@@ -43,7 +43,7 @@ const Home: NextPage = async () => {
 							</div>
 							<Button className="ml-auto">
 								<Link
-									href={`/homeseeker/viewproperty/?id=${property.id}`}
+									href={`/homeseeker/${property.id}`}
 									className="text-white visited:text-white"
 								>
 									Book Now

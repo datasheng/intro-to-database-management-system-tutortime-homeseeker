@@ -1,19 +1,21 @@
 "use client";
 
-import { Property } from "@/db/homeseeker/property";
 import { Button, Card, NumberInput, TextInput } from "@tremor/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+
+import { Property } from "@/db/homeseeker/property";
 import { deletePropertyById, updatePropertyDetails } from "./actions";
 
 interface EditPropertyFormProps {
 	property: Property;
-	onSubmit: () => void;
 }
 
 export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 	property,
-	onSubmit,
 }) => {
+	const router = useRouter();
+
 	const [editMode, setEditMode] = useState(false);
 	const [input, setInput] = useState({
 		address: property.address ?? "",
@@ -30,7 +32,8 @@ export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 		const success = await deletePropertyById(property.id);
 		if (success) {
 			alert("Property deleted successfully");
-			onSubmit();
+			router.push("/homeseeker");
+			router.refresh();
 		} else {
 			alert("Failed to delete the property");
 		}
@@ -50,7 +53,7 @@ export const EditPropertyForm: React.FC<EditPropertyFormProps> = ({
 		if (response) {
 			setError(null);
 			setEditMode(false);
-			onSubmit();
+			router.refresh();
 		} else {
 			setError("Failed to update the property");
 		}
