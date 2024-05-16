@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    @apply bg-tremor-background-muted;
+}
+
 a {
     @apply text-blue-500;
 }

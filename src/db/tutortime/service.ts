@@ -45,6 +45,33 @@ export async function getServices(): Promise<Service[]> {
 }
 
 /**
+ * Retrieve service from database by id.
+ */
+export async function getService(service_id: number): Promise<Service | null> {
+	const [res] = await pool.execute<Service[]>(
+		`SELECT
+            s.id AS id,
+            s.name AS name,
+            CONCAT(u.first_name, ' ', u.last_name) AS admin,
+            s.timezone AS timezone,
+            s.duration AS duration,
+            s.description AS description
+        FROM tt_service AS s
+        JOIN user AS u
+            ON s.admin_id = u.id
+        WHERE s.active = true
+            AND s.id = :service_id`,
+		{ service_id },
+	);
+
+	if (res.length !== 1) {
+		return null;
+	}
+
+	return res[0];
+}
+
+/**
  * Creates a new service with the given parameters.
  *
  * @returns id of newly created service

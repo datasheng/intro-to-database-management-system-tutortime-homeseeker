@@ -4,7 +4,7 @@ import { Button, Card } from "@tremor/react";
 import { NextPage } from "next";
 import Link from "next/link";
 
-import { getServices } from "@/db/tutortime/services";
+import { getServices } from "@/db/tutortime/service";
 
 const Home: NextPage = async () => {
 	const services = await getServices();
