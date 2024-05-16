@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "biome": "biome check src --apply-unsafe",
+    "lint": "biome check --apply-unsafe src",
     "postinstall": "patch-package"
   },
   "dependencies": {
