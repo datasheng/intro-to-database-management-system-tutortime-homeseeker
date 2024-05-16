@@ -1,10 +1,10 @@
-"use server"
+"use server";
 import { getAllTransactions } from "@/db/transaction";
 import { getCurrentUser } from "./cookies";
 
 export default async function Home() {
 	const user = getCurrentUser();
-	const transactions = await getAllTransactions()
+	const transactions = await getAllTransactions();
 
 	return (
 		user?.is_admin ?
