@@ -127,7 +127,7 @@ export async function createProperty(
 			price,
 			rooms,
 			area,
-			built
+			built,
 		};
 
 		const [res] = await pool.execute<ResultSetHeader>(

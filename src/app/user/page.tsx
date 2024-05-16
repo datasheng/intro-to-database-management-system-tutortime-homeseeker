@@ -10,25 +10,27 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
 	fetchUserDetails,
+	getAmount,
 	getPayeePayments,
 	getPropertyAppointments,
 	getRecipientPayments,
 	getUserAppointments,
 	getUserProperties,
-	getAmount
 } from "./actions";
 
 const Account: NextPage = () => {
 	const [user, setUser] = useState<User | null>(null);
 	const [properties, setProperties] = useState<Property[] | null>(null);
-	const [propertyAppointments, setPropertyAppointments] = useState<Appointment[] | null>(null);
+	const [propertyAppointments, setPropertyAppointments] = useState<
+		Appointment[] | null
+	>(null);
 	const [appointments, setAppointments] = useState<Appointment[] | null>(null);
 	const [transactions, setTransactions] = useState<Transaction[] | null>(null);
 	const [payments, setPayments] = useState<Transaction[] | null>(null);
 	const [amount, setAmount] = useState({
 		owned: 0,
-		earned: 0
-	})
+		earned: 0,
+	});
 
 	useEffect(() => {
 		const fetchCurrentUser = async () => {
@@ -83,7 +85,6 @@ const Account: NextPage = () => {
 									<div>
 										<div className="flex flex-col">
 											{transactions && transactions.length > 0 ? (
-
 												<div>
 													<h2>Your Transactions:</h2>
 													{transactions.map((transaction) => (
@@ -101,9 +102,7 @@ const Account: NextPage = () => {
 												<div>
 													<h2>Your Anticipated Payments:</h2>
 													{payments.map((payment) => (
-														<div key={payment.id}>
-															{payment.description}
-														</div>
+														<div key={payment.id}>{payment.description}</div>
 													))}
 												</div>
 											) : (
@@ -174,8 +173,12 @@ const Account: NextPage = () => {
 														<div className="mb-3 flex flex-row items-center gap-10">
 															<div>
 																<p>Location: {appointment.address}</p>
-																<p>By: {appointment.first_name} {appointment.last_name}</p>
-																<p>{appointment.type}</p></div>
+																<p>
+																	By: {appointment.first_name}{" "}
+																	{appointment.last_name}
+																</p>
+																<p>{appointment.type}</p>
+															</div>
 															<div>
 																<p>
 																	Start Time:
@@ -217,8 +220,12 @@ const Account: NextPage = () => {
 													<div className="mb-3 flex flex-row items-center gap-10">
 														<div>
 															<p>Location: {appointment.address}</p>
-															<p>By: {appointment.first_name} {appointment.last_name}</p>
-															<p>{appointment.type}</p></div>
+															<p>
+																By: {appointment.first_name}{" "}
+																{appointment.last_name}
+															</p>
+															<p>{appointment.type}</p>
+														</div>
 														<div>
 															<p>
 																Start Time:

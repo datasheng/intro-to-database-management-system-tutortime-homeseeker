@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button, Card } from "@tremor/react";
 
 import { type Service, getServices } from "@/db/tutortime/services";
@@ -6,18 +6,18 @@ import { useEffect, useState } from "react";
 import { fetchServices } from "./actions";
 
 export default function Home() {
-	const [services, setServices] = useState<null | Service[]>(null)
+	const [services, setServices] = useState<null | Service[]>(null);
 
-	useEffect(()=>{
-		async function populate(){
-			const s = await fetchServices()
-			setServices(s)
+	useEffect(() => {
+		async function populate() {
+			const s = await fetchServices();
+			setServices(s);
 		}
-		populate()
-	},[])
+		populate();
+	}, []);
 
-	function book(service: Service){
-		console.log(service)
+	function book(service: Service) {
+		console.log(service);
 	}
 
 	return (
@@ -35,7 +35,9 @@ export default function Home() {
 									Offered by {service.admin}
 								</p>
 							</div>
-							<Button className="ml-auto" onClick={() => book(service)}>Book Now!</Button>
+							<Button className="ml-auto" onClick={() => book(service)}>
+								Book Now!
+							</Button>
 						</div>
 						<p>{service.description}</p>
 					</Card>
