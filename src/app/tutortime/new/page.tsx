@@ -15,7 +15,8 @@ import {
 } from "@tremor/react";
 import { getTimeZones } from "@vvo/tzdb";
 import { NextPage } from "next";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
 import { State, newService } from "./actions";
@@ -92,9 +93,17 @@ const TimeRangeInput: React.FC<TimeRangeInputProps> = ({
 );
 
 const NewService: NextPage = () => {
+	const router = useRouter();
+
 	const [state, formAction] = useFormState<State, FormData>(newService, {});
 
 	const [hours, setHours] = useState<Hours>({});
+
+	useEffect(() => {
+		if (state.data) {
+			router.push("/tutortime");
+		}
+	}, [router, state]);
 
 	return (
 		<div className="container mx-auto py-20">
