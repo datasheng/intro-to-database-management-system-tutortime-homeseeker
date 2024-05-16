@@ -1,18 +1,22 @@
 export default function Home() {
 	return (
-		<section className="relative">
-			<div className="container justify-items-center items-center gap-12 mt-14 lg:mt-28 ml-4">
-				<div className="flex flex-1 flex-col items-center lg:items-start">
-					<h2 className="text-bookmark-blue text-3xl md:text-4 lg:text-5xl text-center lg:text-left mb-6">
-						Welcome to TutorTime + Homeseeker
-					</h2>
-					<p className="text-bookmark-grey text-lg text-center lg:text-left mb-6">
-						Book appointments for homes and tutors today!
-						<br />
-						Sign up now to get started
-					</p>
-				</div>
+		<div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
+			<div className="max-w-md w-full space-y-8 bg-white p-10 rounded-lg shadow-lg">
+				<h1 className="font-bold text-2xl text-center text-blue-900">
+					Welcome to <br /> TutorTime + HomeSeeker.
+				</h1>
+				<h3 className="mt-2 text-lg text-center text-gray-900">
+					To get started, first choose between the offered services.
+				</h3>
+				<p className="mt-4 text-md text-center text-gray-900">
+					Want to sell/rent your home? Are you interested in buying property?
+					Select <span className="font-semibold text-blue-900">HomeSeeker</span>
+				</p>
+				<p className="text-md text-center npx biome check --apply-unsafe srctext-gray-900">
+					Need a tutor? Interested in becoming one? Select{" "}
+					<span className="font-semibold text-blue-900">TutorTime</span>
+				</p>
 			</div>
-		</section>
+		</div>
 	);
 }

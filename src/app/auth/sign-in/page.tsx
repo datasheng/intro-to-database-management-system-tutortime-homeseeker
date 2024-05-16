@@ -17,6 +17,7 @@ const SignIn: NextPage = () => {
 	useEffect(() => {
 		if (state.data) {
 			router.push("/user");
+			router.refresh();
 		}
 	}, [router, state]);
 
